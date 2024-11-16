@@ -49,11 +49,11 @@ if __name__ == "__main__":
     print(colored_art("Nessus Rider", style="starwars"))
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     parser = argparse.ArgumentParser(description="Nessus to Ghostwriter Import Tool")
-    parser.add_argument("-scan_id", type=str, required=True,
+    parser.add_argument("-nessus_scan_ids", type=str, required=True,
                         help="The ID of the Nessus scan (if you have multiple scans separated by comma)")
-    parser.add_argument("-project_id", type=str, required=True, help="The ID of the Ghostwriter project")
+    parser.add_argument("-ghostwriter_project_id", type=str, required=True, help="The ID of the Ghostwriter project")
     parser.add_argument("-insecure", action="store_false", help="Disable SSL certificate verification")
     parser.add_argument("-language", type=str, default="english", help="The language (default: English)")
     args = parser.parse_args()
 
-    main(args.scan_id, args.project_id, args.language, args.insecure)
+    main(args.nessus_scan_ids, args.ghostwriter_project_id, args.language, args.insecure)

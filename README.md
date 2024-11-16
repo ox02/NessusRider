@@ -1,11 +1,4 @@
-```
-.__   __.  _______      _______.   _______. __    __      _______.    .______       __   _______   _______ .______      
-|  \ |  | |   ____|    /       |  /       ||  |  |  |    /       |    |   _  \     |  | |       \ |   ____||   _  \     
-|   \|  | |  |__      |   (----` |   (----`|  |  |  |   |   (----`    |  |_)  |    |  | |  .--.  ||  |__   |  |_)  |    
-|  . `  | |   __|      \   \      \   \    |  |  |  |    \   \        |      /     |  | |  |  |  ||   __|  |      /     
-|  |\   | |  |____ .----)   | .----)   |   |  `--'  |.----)   |       |  |\  \----.|  | |  '--'  ||  |____ |  |\  \----.
-|__| \__| |_______||_______/  |_______/     \______/ |_______/        | _| `._____||__| |_______/ |_______|| _| `._____|
-```
+![Nessus Rider](readme_img.jpeg)
 
 This Python tool automates the process of importing vulnerability data from Nessus into Ghostwriter, utilizing Google Gemini AI for natural language generation to enhance findings. The tool fetches scan data from the Nessus API, processes it, and uploads the findings to a specified Ghostwriter project.
 
@@ -18,6 +11,7 @@ This Python tool automates the process of importing vulnerability data from Ness
 - [Usage](#usage)
 - [Environment Variables](#environment-variables)
 - [Notes](#notes)
+- [Enhancements ideas](#enhancements-ideas)
 
 ## Features
 
@@ -67,15 +61,15 @@ python nessusrider.py -scan_id <scan_id> -project_id <project_id> [-insecure] [-
 
 ### Arguments
 
-- `-scan_id` (required): The ID of the Nessus scan(s) to process. Multiple scan IDs can be provided, separated by commas.
-- `-project_id` (required): The ID of the Ghostwriter project where the findings will be added.
+- `-nessus_scan_ids` (required): The ID of the Nessus scan(s) to process. Multiple scan IDs can be provided, separated by commas.
+- `-ghostwriter_project_id` (required): The ID of the Ghostwriter project where the findings will be added.
 - `-insecure`: Disable SSL verification for API requests.
 - `-language`: The language of the generated findings. Defaults to English.
 
 ### Example
 
 ```bash
-python nessusrider.py -scan_id "12345,67890" -project_id "555" -language "italian"
+python nessusrider.py -nessus_scan_ids "12345,67890" -ghostwriter_project_id "555" -language "italian"
 ```
 
 ## Environment Variables
@@ -98,5 +92,7 @@ python nessusrider.py -scan_id "12345,67890" -project_id "555" -language "italia
 
 ## Enhancements ideas
 
-- Configuration files to centralized the customization.
+- Add configuration files to centralized the customization.
+- Optimize Google Gemini for generating accurate and detailed descriptions of security vulnerabilities, including recommended solutions to help users mitigate potential risks effectively.
 - Make sure that only new vulnerabilities are added to the GhostWriter findings library, while existing ones are referenced in the report along with scan details.
+- Improve logging.
