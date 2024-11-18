@@ -56,7 +56,7 @@ This script requires several environment variables for authentication with Nessu
 Run the tool from the command line, passing in the required arguments:
 
 ```bash
-python nessusrider.py -scan_id <scan_id> -project_id <project_id> [-insecure] [-language <language>]
+python nessusrider.py -nessus_scan_ids <scan_id> -ghostwriter_project_id <project_id> [-insecure] [-language <language>]
 ```
 
 ### Arguments
