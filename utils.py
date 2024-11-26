@@ -210,7 +210,7 @@ def extract_risk_info(plugin_description):
     """
     risk_info = plugin_description.get('pluginattributes', {}).get('risk_information', {})
     cvss_vector = risk_info.get('cvss3_vector') or risk_info.get('cvss_vector', "Not Provided")
-    cvss_score = float(risk_info.get('cvss3_base_score')) or float(risk_info.get('cvss_base_score', "0.0"))
+    cvss_score = float(risk_info.get('cvss3_base_score', "0.0")) or float(risk_info.get('cvss_base_score', "0.0"))
     return cvss_vector, cvss_score
 
 
