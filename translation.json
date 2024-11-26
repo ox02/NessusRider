@@ -862,5 +862,719 @@
         "language": "italiano",
         "translated_description": "Il servizio remoto accetta connessioni criptate utilizzando SSL 2.0 e/o SSL 3.0. Queste versioni di SSL sono affette da diversi difetti crittografici, tra cui:\n\n  - Uno schema di riempimento non sicuro con cifre CBC.\n\n  - Schemi di renegotiazione e ripresa della sessione non sicuri.\n\nUn attaccante può sfruttare questi difetti per condurre attacchi man-in-the-middle o per decrittografare le comunicazioni tra il servizio interessato e i client.\n\nSebbene SSL/TLS disponga di un mezzo sicuro per scegliere la versione più alta del protocollo supportato (in modo che queste versioni siano utilizzate solo se il client o il server non supportano nulla di meglio), molti browser web lo implementano in modo non sicuro che consente a un attaccante di eseguire il downgrade di una connessione (come in POODLE). Pertanto, si consiglia di disabilitare completamente questi protocolli.\n\nNIST ha stabilito che SSL 3.0 non è più accettabile per le comunicazioni sicure. A partire dalla data di applicazione stabilita in PCI DSS v3.1, nessuna versione di SSL soddisferà la definizione di \"crittografia forte\" del PCI SSC.",
         "translate_mitigation": "Consulta la documentazione dell'applicazione per disabilitare SSL 2.0 e 3.0.\nUtilizza invece TLS 1.2 (con suite di cifratura approvate) o versioni successive. \n"
+    },
+    {
+        "plugin_id": "46803",
+        "language": "italiano",
+        "translated_description": "L'installazione di PHP sul server remoto è configurata in modo da consentire la divulgazione di informazioni potenzialmente sensibili a un attaccante tramite un URL speciale. Tale URL attiva un easter egg integrato nello stesso PHP.\n\nAltri easter egg simili potrebbero esistere, ma Nessus non li ha controllati.",
+        "translate_mitigation": "Nel file di configurazione di PHP, php.ini, imposta il valore di 'expose_php' su 'Off' per disabilitare questo comportamento. Riavvia il daemon del server web per rendere effettiva questa modifica.\n"
+    },
+    {
+        "plugin_id": "39466",
+        "language": "italiano",
+        "translated_description": "Il server web remoto ospita script CGI che non eseguono una corretta sanitizzazione delle stringhe di richiesta contenenti JavaScript malevolo. Sfruttando questa vulnerabilità, un attaccante potrebbe essere in grado di causare l'esecuzione di codice HTML e script arbitrario nel browser di un utente, all'interno del contesto di sicurezza del sito interessato.\n\nQueste XSS sono probabilmente \"non persistenti\" o \"riflesse\".",
+        "translate_mitigation": "Limitare l'accesso all'applicazione vulnerabile. Contattare il fornitore per una patch o un aggiornamento per risolvere eventuali vulnerabilità di cross-site scripting (XSS).\n"
+    },
+    {
+        "plugin_id": "26928",
+        "language": "italiano",
+        "translated_description": "L'host remoto supporta l'utilizzo di cipher SSL che offrono una crittografia debole.\n\nNota: Questo è considerevolmente più facile da sfruttare se l'attaccante si trova sulla stessa rete fisica.",
+        "translate_mitigation": "Ricostruisci l'applicazione interessata, se possibile evitando l'uso di cifrari deboli.\n"
+    },
+    {
+        "plugin_id": "134220",
+        "language": "italiano",
+        "translated_description": "Secondo l'header di risposta del server, la versione installata di nginx è precedente alla 1.17.7. È quindi vulnerabile a una falla di divulgazione di informazioni.",
+        "translate_mitigation": "Aggiorna a nginx versione 1.17.7 o successiva.\n"
+    },
+    {
+        "plugin_id": "142960",
+        "language": "italiano",
+        "translated_description": "Il server web remoto non sta applicando HSTS, come definito nell'RFC 6797. HSTS è un'intestazione di risposta opzionale che può essere configurata sul server per istruire il browser a comunicare solo tramite HTTPS. La mancanza di HSTS permette attacchi di downgrade, attacchi man-in-the-middle di tipo SSL-stripping e indebolisce le protezioni contro il cookie-hijacking.",
+        "translate_mitigation": "Configura il server web remoto per utilizzare HSTS (HTTP Strict Transport Security).\n"
+    },
+    {
+        "plugin_id": "39587",
+        "language": "italiano",
+        "translated_description": "Era possibile avvelenare le tabelle di routing dell'host remoto tramite il protocollo RIP.\n\nUn attaccante potrebbe usare questo per dirottare le connessioni di rete.\n\nDiversi agenti RIP rifiutano rotte che non vengono inviate da un vicino, quindi questa vulnerabilità potrebbe non essere sfruttabile da una rete non adiacente.",
+        "translate_mitigation": "Disabilitare il listener RIP se non utilizzato, usare RIP-2 con autenticazione oppure utilizzare un altro protocollo di routing.\n"
+    },
+    {
+        "plugin_id": "23818",
+        "language": "italiano",
+        "translated_description": "Utilizzando il codice funzione 2, Modbus può leggere gli ingressi discreti da uno slave Modbus, comunemente utilizzati da dispositivi di campo SCADA e DCS.  Gli ingressi discreti rappresentano valori binari (cioè booleani) che spesso corrispondono a interruttori, relè o altri sensori. Un esempio di ingressi discreti letti dal dispositivo è fornito dall'output del plugin.\n\nLa capacità di leggere gli ingressi discreti può aiutare un attaccante a profilare un sistema.",
+        "translate_mitigation": "Limitare l'accesso alla porta Modbus (TCP/502) ai soli client Modbus autorizzati.\n"
+    },
+    {
+        "plugin_id": "190601",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, la versione di Grafana Labs in esecuzione sull'host remoto è una versione 9.5.x precedente alla 9.5.16, 10.0.x precedente alla 10.0.11, 10.1.x precedente alla 10.1.7, 10.2.x precedente alla 10.2.4 o 10.3.x precedente alla 10.3.3.  È quindi interessata da una vulnerabilità di autorizzazione errata in cui un utente che cambia la propria email dopo la registrazione e la verifica può cambiarla senza verifica nelle impostazioni del profilo. L'opzione di configurazione 'verify_email_enabled' convaliderà l'email solo al momento della registrazione.\n\nSi noti che Nessus non ha testato questi problemi, ma si è invece basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna a Grafana 9.5.16, 10.0.11, 10.1.7, 10.2.4, 10.3.3 o versioni successive.\n"
+    },
+    {
+        "plugin_id": "40984",
+        "language": "italiano",
+        "translated_description": "Diversi plugin di Nessus hanno identificato directory sul server web che sono navigabili.",
+        "translate_mitigation": "Assicurarsi che le directory accessibili tramite browser non divulghino informazioni riservate né forniscano accesso a risorse sensibili. Inoltre, utilizzare restrizioni di accesso o disabilitare l'indicizzazione delle directory per quelle che lo fanno.\n"
+    },
+    {
+        "plugin_id": "85582",
+        "language": "italiano",
+        "translated_description": "Il server web remoto non imposta un header di risposta X-Frame-Options o un header di risposta Content-Security-Policy 'frame-ancestors' in tutte le risposte del contenuto. Questo potrebbe potenzialmente esporre il sito a un attacco clickjacking o di UI redress, in cui un attaccante può ingannare un utente inducendolo a cliccare su un'area della pagina vulnerabile diversa da quella che l'utente percepisce. Ciò può portare un utente a eseguire transazioni fraudolente o dannose.\n\nX-Frame-Options è stato proposto da Microsoft come metodo per mitigare gli attacchi clickjacking ed è attualmente supportato da tutti i principali fornitori di browser.\n\nContent-Security-Policy (CSP) è stato proposto dal W3C Web Application Security Working Group, con un supporto crescente tra tutti i principali fornitori di browser, come metodo per mitigare gli attacchi clickjacking e altri attacchi. La direttiva di policy 'frame-ancestors' limita quali sorgenti possono incorporare la risorsa protetta.\n\nSi noti che, sebbene gli header di risposta X-Frame-Options e Content-Security-Policy non siano le uniche misure di mitigazione per il clickjacking, sono attualmente i metodi più affidabili che possono essere rilevati tramite automazione. Pertanto, questo plugin potrebbe produrre falsi positivi se vengono implementate altre strategie di mitigazione (ad esempio, JavaScript frame-busting) o se la pagina non esegue alcuna transazione sensibile alla sicurezza.",
+        "translate_mitigation": "Restituisci l'intestazione HTTP X-Frame-Options o Content-Security-Policy (con la direttiva 'frame-ancestors') con la risposta della pagina.  Questo impedisce che il contenuto della pagina venga visualizzato da un altro sito quando si utilizzano i tag HTML frame o iframe.\n"
+    },
+    {
+        "plugin_id": "50686",
+        "language": "italiano",
+        "translated_description": "L'host remoto ha abilitato l'inoltro IP. Un attaccante può sfruttare questo per instradare pacchetti attraverso l'host e potenzialmente bypassare alcuni firewall/router/filtraggio NAC.\n\nA meno che l'host remoto non sia un router, si consiglia di disabilitare l'inoltro IP.",
+        "translate_mitigation": "Su Linux, puoi disabilitare il forwarding IP eseguendo questo comando:\n\necho 0 > /proc/sys/net/ipv4/ip_forward\n\nSu Windows, imposta il valore della chiave 'IPEnableRouter' a 0 nella seguente posizione:\n\nHKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Tcpip\\Parameters\n\nSu macOS, puoi disabilitare il forwarding IP eseguendo il comando:\n\nsysctl -w net.inet.ip.forwarding=0\n\nPer altri sistemi, contatta il tuo fornitore.\n"
+    },
+    {
+        "plugin_id": "90509",
+        "language": "italiano",
+        "translated_description": "La versione di Samba, un server CIFS/SMB per Linux e Unix, in esecuzione sull'host remoto, è affetta da una vulnerabilità nota come Badlock, presente nei protocolli Security Account Manager (SAM) e Local Security Authority (Domain Policy) (LSAD) a causa di una negoziazione inadeguata del livello di autenticazione sui canali Remote Procedure Call (RPC). Un attaccante man-in-the-middle in grado di intercettare il traffico tra un client e un server che ospita un database SAM può sfruttare questa vulnerabilità per forzare un downgrade del livello di autenticazione, il che consente l'esecuzione di chiamate di rete Samba arbitrarie nel contesto dell'utente intercettato, come la visualizzazione o la modifica di dati di sicurezza sensibili nel database Active Directory (AD) o la disabilitazione di servizi critici.",
+        "translate_mitigation": "Esegui l'aggiornamento a Samba versione 4.2.11 / 4.3.8 / 4.4.2 o successiva.\n"
+    },
+    {
+        "plugin_id": "42256",
+        "language": "italiano",
+        "translated_description": "Il server NFS remoto sta esportando una o più condivisioni senza limitare l'accesso (in base a hostname, IP o range IP).",
+        "translate_mitigation": "Applicare le restrizioni appropriate a tutte le condivisioni NFS.\n"
+    },
+    {
+        "plugin_id": "10907",
+        "language": "italiano",
+        "translated_description": "Utilizzando le credenziali fornite, Nessus ha potuto determinare che l'utente 'Guest' appartiene a gruppi diversi da 'Guests' (RID 546) o 'Domain Guests' (RID 514). Gli utenti Guest non dovrebbero avere privilegi aggiuntivi.",
+        "translate_mitigation": "Modifica le impostazioni di policy locali o di dominio per limitare l'appartenenza a gruppi dell'account ospite.\n"
+    },
+    {
+        "plugin_id": "51368",
+        "language": "italiano",
+        "translated_description": "Uno o più target iSCSI (Internet Small Computer Systems Interface) sull'host remoto sono configurati per non utilizzare un meccanismo di autenticazione, permettendo potenzialmente l'accesso non autorizzato ai target.",
+        "translate_mitigation": "Configura l'autenticazione sul target per limitare l'accesso agli iniziatori autorizzati.\n"
+    },
+    {
+        "plugin_id": "162139",
+        "language": "italiano",
+        "translated_description": "È stata identificata una potenziale vulnerabilità di sicurezza in Integrated Lights-Out 4 (iLO 4). La vulnerabilità potrebbe consentire un Denial of Service (DoS) remoto.  La vulnerabilità è risolta in Integrated Lights-Out 4 (iLO 4) versione 2.80 e successive.\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna il firmware alla versione 2.80 o successiva.\n"
+    },
+    {
+        "plugin_id": "125342",
+        "language": "italiano",
+        "translated_description": "Secondo quanto autodichiarato, il server HP Integrated Lights-Out in esecuzione sull'host remoto è precedente alla versione 2.70/1.40a rispettivamente per iLO 4/iLO 5.  È quindi affetto da diverse vulnerabilità:\n\n- Esiste una vulnerabilità di cross-site scripting (XSS) dovuta a una convalida non corretta dell'input fornito dall'utente prima di restituirlo. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, inducendo un utente a cliccare su un URL appositamente creato, per eseguire codice script arbitrario nella sessione del browser dell'utente. (CVE-2018-7117, CVE-2019-11982)\n\n- Esiste una condizione di overflow del buffer nel componente dell'interfaccia a riga di comando di HPE iLO. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità per causare una condizione di denial of service o l'esecuzione di codice arbitrario. (CVE-2019-11983)",
+        "translate_mitigation": "Per HP Integrated Lights-Out 4 (iLO 4), aggiornare il firmware alla versione 2.70 o successiva. Per HP Integrated Lights-Out 5 (iLO 5), aggiornare il firmware alla versione 1.40a o successiva.\n"
+    },
+    {
+        "plugin_id": "122032",
+        "language": "italiano",
+        "translated_description": "Secondo il suo numero di versione, il server HP Integrated Lights-Out (iLO) remoto è interessato da diverse vulnerabilità:\n\n- Una vulnerabilità di esecuzione di comandi remoti esiste nel server HP Integrated Lights-Out (iLO) a causa di una ragione non specificata. Un attaccante remoto non autenticato può sfruttare questo per bypassare l'autenticazione ed eseguire comandi arbitrari sul server (CVE-2018-7078).\n\n- Una vulnerabilità di denial of service (DoS) esiste nel server HP Integrated Lights-Out (iLO) a causa di una ragione non specificata. Un attaccante remoto non autenticato può sfruttare questo problema per causare l'arresto dell'applicazione (CVE-2018-7101).",
+        "translate_mitigation": "Per HP Integrated Lights-Out (iLO) 4, aggiornare il firmware alla versione 2.60 o successiva. Per iLO 5, aggiornare il firmware alla versione 1.30 o successiva.\n"
+    },
+    {
+        "plugin_id": "80101",
+        "language": "italiano",
+        "translated_description": "L'host remoto supporta IPMI v2.0. Il protocollo Intelligent Platform Management Interface (IPMI) è affetto da una vulnerabilità di divulgazione di informazioni dovuta al supporto del protocollo di autenticazione RMCP+ Authenticated Key-Exchange (RAKP). Un attaccante remoto può ottenere informazioni sull'hash delle password per account utente validi tramite l'HMAC da una risposta del messaggio 2 RAKP da un BMC.",
+        "translate_mitigation": "Non esiste una patch per questa vulnerabilità; si tratta di un problema intrinseco della specifica IPMI v2.0.  Le mitigazioni suggerite includono:\n\n- Disabilitare IPMI su LAN se non necessario.\n\n- Utilizzare password robuste per limitare la riuscita di attacchi di dizionario offline.\n\n- Utilizzare Access Control List (ACL) o reti isolate per limitare l'accesso alle interfacce di gestione IPMI.\n"
+    },
+    {
+        "plugin_id": "201194",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSH installata sull'host remoto è precedente alla 9.8.  È quindi affetta da una vulnerabilità come indicato nell'avviso della release-9.8.\n\n- Questa release contiene correzioni per due problemi di sicurezza, uno critico e uno minore. 1) Condizione di gara in sshd(8) Una vulnerabilità critica in sshd(8) era presente nelle versioni di Portable OpenSSH comprese tra 8.5p1 e 9.7p1 (inclusive) che potrebbe consentire l'esecuzione di codice arbitrario con privilegi di root.  È stata dimostrata la riuscita dello sfruttamento su sistemi Linux/glibc a 32 bit con ASLR. In laboratorio, l'attacco richiede in media 6-8 ore di connessioni continue fino al massimo che il server accetterà. Si ritiene che lo sfruttamento su sistemi a 64 bit sia possibile, ma non è stato ancora dimostrato. È probabile che questi attacchi vengano migliorati. Lo sfruttamento su sistemi non glibc è concepibile, ma non è stato esaminato. I sistemi che non dispongono di ASLR o gli utenti di distribuzioni Linux derivate che hanno modificato OpenSSH per disabilitare la ri-randomizzazione ASLR per connessione (sì, è una cosa, no, non capiamo perché) potrebbero potenzialmente avere un percorso più facile per lo sfruttamento. OpenBSD non è vulnerabile. Ringraziamo il Qualys Security Advisory Team per aver scoperto, segnalato e dimostrato lo sfruttabilità di questo problema, e per aver fornito un feedback dettagliato su ulteriori misure di mitigazione. 2) Errore logico in ssh(1) ObscureKeystrokeTiming Nelle versioni di OpenSSH da 9.5 a 9.7 (inclusive), quando connessi a un server OpenSSH versione 9.5 o successiva, un errore logico nella funzionalità ObscureKeystrokeTiming di ssh(1) (attivata per impostazione predefinita) rendeva questa funzionalità inefficace - un osservatore passivo poteva comunque rilevare quali pacchetti di rete contenevano battiture reali quando la contromisura era attiva perché venivano inviati incondizionatamente sia pacchetti di battiture false che reali. Questo bug è stato segnalato da Daniel Hugenroth e Alastair Beresford del Computer Lab dell'Università di Cambridge. Peggio ancora, l'invio incondizionato di entrambi i pacchetti di battiture false e reali ha interrotto un'altra mitigazione di attacco temporale di vecchia data. Da OpenSSH 2.9.9 sshd(8) ha inviato pacchetti di eco di battiture false per il traffico ricevuto su TTY in modalità echo-off, come quando si inserisce una password in su(8) o sudo(8). Questo bug ha reso inefficaci questi echi di battiture false e potrebbe consentire a un osservatore passivo di una sessione SSH di rilevare nuovamente quando l'eco era disattivato e di ottenere informazioni temporali piuttosto limitate sulle battiture in questa situazione (granularità di 20 ms per impostazione predefinita). Questa ulteriore implicazione del bug è stata identificata da Jacky Wei En Kung, Daniel Hugenroth e Alastair Beresford e li ringraziamo per la loro analisi dettagliata. Questo bug non interessa le connessioni quando ObscureKeystrokeTiming era disabilitato o le sessioni in cui non è stato richiesto alcun TTY. (openssh-9.8-1)\n\nSi noti che Nessus non ha testato questo problema, ma si è invece basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna a OpenSSH versione 9.8 o successiva.\n"
+    },
+    {
+        "plugin_id": "200746",
+        "language": "italiano",
+        "translated_description": "La versione di VMware vCenter Server installata sull'host remoto è la 7.0 precedente alla 7.0U3r, o l'8.0 precedente alla 8.0U2d. È quindi interessata da una vulnerabilità di divulgazione parziale di informazioni, come indicato nell'avviso VMSA-2024-0012:\n\n  - vCenter Server contiene molteplici vulnerabilità di overflow dell'heap nell'implementazione del protocollo DCERPC.     (CVE-2024-37079, CVE-2024-37080)\n\n  - vCenter Server contiene molteplici vulnerabilità di escalation dei privilegi locali dovute a una configurazione errata di sudo.     (CVE-2024-37081)   Si noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a VMware vCenter Server 7.0U3r, oppure 8.0U2d o versione successiva.\n"
+    },
+    {
+        "plugin_id": "118154",
+        "language": "italiano",
+        "translated_description": "Il server SSH remoto è vulnerabile a un bypass di autenticazione. Un attaccante può bypassare l'autenticazione presentando il messaggio SSH2_MSG_USERAUTH_SUCCESS al posto del metodo SSH2_MSG_USERAUTH_REQUEST che normalmente avvia l'autenticazione.\n\nNota: Questa vulnerabilità è stata divulgata in un avviso di libssh, ma è stata anche osservata come applicabile ad altre applicazioni e pacchetti software.",
+        "translate_mitigation": "Esegui l'aggiornamento a libssh 0.7.6 / 0.8.4 o successivi, se applicabile. Altrimenti, contatta il tuo fornitore del prodotto.\n"
+    },
+    {
+        "plugin_id": "11356",
+        "language": "italiano",
+        "translated_description": "Almeno una delle condivisioni NFS esportate dal server remoto è stata montata dall'host di scansione. Un attaccante potrebbe sfruttare questa vulnerabilità per leggere (e possibilmente scrivere) file sull'host remoto.\n\nNota: Le condivisioni protette da una ACL che include l'IP dell'host Nessus non saranno testate.",
+        "translate_mitigation": "Configura NFS sull'host remoto in modo che solo gli host autorizzati possano montare le sue condivisioni remote.\n"
+    },
+    {
+        "plugin_id": "122095",
+        "language": "italiano",
+        "translated_description": "Una vulnerabilità di esecuzione di comandi remoti esiste in Integrated Lights-Out 4 (iLO 4) a causa di un overflow del buffer nel codice di gestione della connessione http del server. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità per bypassare l'autenticazione ed eseguire comandi arbitrari.",
+        "translate_mitigation": "Aggiorna il firmware di HP Integrated Lights-Out 4 (iLO 4) alla versione 2.53 o successiva.\n"
+    },
+    {
+        "plugin_id": "102803",
+        "language": "italiano",
+        "translated_description": "Secondo il suo numero di versione, il server HP Integrated Lights-Out 4 (iLO 4) remoto è affetto da molteplici vulnerabilità non specificate che consentono a un attaccante remoto di bypassare l'autenticazione ed eseguire codice arbitrario.",
+        "translate_mitigation": "Aggiorna al firmware versione 2.53 di HP Integrated Lights-Out 4 (iLO 4).\n"
+    },
+    {
+        "plugin_id": "140770",
+        "language": "italiano",
+        "translated_description": "Sono state identificate multiple vulnerabilità di sicurezza nel firmware Integrated Lights-Out di generazione 3 (iLO 3) precedenti alla versione 1.93, di generazione 4 (iLO 4) precedenti alla versione 2.75 e di generazione 5 (iLO 5) precedenti alla versione 2.18.  Sono inoltre vulnerabili le versioni di Superdome di generazione 4 precedenti alla 1.64 e le versioni di Moonshot/Edgeline di generazione 5 precedenti alla 2.30.  Le vulnerabilità potrebbero essere sfruttate da remoto per eseguire codice, causare la negazione del servizio (denial of service) e esporre informazioni sensibili.\n\nNota: Queste vulnerabilità sono collettivamente denominate Ripple20. iLO 3, iLO 4 e iLO 5 sono esposti solo ad una parte delle vulnerabilità Ripple20.",
+        "translate_mitigation": "Esegui l'aggiornamento al firmware HP iLO 3 alla versione 1.93 o successiva, al firmware iLO 4 alla versione 2.75 o successiva, o al firmware iLO 4 per Superdome alla versione 1.64 o successiva, oppure al firmware HP iLO 5 alla versione 2.18 o al firmware HP Moonshot/Edgeline iLO 5 alla versione 2.30 o successiva.\n"
+    },
+    {
+        "plugin_id": "26920",
+        "language": "italiano",
+        "translated_description": "L'host remoto è in esecuzione e utilizza il protocollo SMB. È possibile accedere al browser o alle pipe spoolss tramite una sessione NULL (cioè, senza login o password).\n\nA seconda della configurazione, un attaccante remoto non autenticato potrebbe sfruttare questo problema per ottenere informazioni sull'host remoto.",
+        "translate_mitigation": "Si prega di contattare il fornitore del prodotto per soluzioni consigliate.\n"
+    },
+    {
+        "plugin_id": "123797",
+        "language": "italiano",
+        "translated_description": "Il dispositivo di rete remoto sta eseguendo una versione di MikroTik RouterOS vulnerabile a una vulnerabilità di intermediario non autenticato.  Pertanto, un attaccante remoto non autenticato potrebbe utilizzare il router MikroTik per effettuare il proxy di traffico arbitrario o bypassare il firewall del router.",
+        "translate_mitigation": "Aggiorna a MikroTik RouterOS 6.42.12 / 6.43.12 o successivo.\n"
+    },
+    {
+        "plugin_id": "152102",
+        "language": "italiano",
+        "translated_description": "L'host remoto è affetto da una vulnerabilità di elevazione dei privilegi di riflessione NTLM nota come 'PetitPotam'. Un attaccante remoto non autenticato può sfruttarla inviando una richiesta EFSRPC appositamente creata, inducendo l'host interessato a connettersi a un server dannoso. L'attaccante può quindi utilizzare un relay NTLM per impersonare l'host di destinazione e autenticarsi contro servizi remoti.\n\nUno scenario di attacco, descritto nella KB5005413, utilizza questo exploit per avviare una sessione NTLM come account macchina di un controller di dominio. Questa sessione viene quindi inoltrata a un host Active Directory Certificate Services (AD CS) per ottenere un certificato. Questo certificato potrebbe poi essere utilizzato per spostarsi lateralmente all'interno dell'ambiente di dominio.",
+        "translate_mitigation": "Applicare gli aggiornamenti forniti dal fornitore. Facoltativamente, fare riferimento alla KB5005413 di Microsoft per indicazioni sulla mitigazione. È inoltre possibile implementare filtri RPC per bloccare l'accesso remoto agli UUID dell'interfaccia necessari per questo exploit.\n"
+    },
+    {
+        "plugin_id": "121007",
+        "language": "italiano",
+        "translated_description": "L'host remoto sta eseguendo un servizio che utilizza una chiave privata SSH pubblicamente nota.\n\nUn attaccante potrebbe usare questa chiave per decifrare il traffico intercettato tra gli utenti e il dispositivo.\n\nUn attaccante remoto può anche effettuare un attacco man-in-the-middle per ottenere l'accesso al sistema o modificare i dati in transito.",
+        "translate_mitigation": "Laddove possibile, cambia le chiavi host SSH in modo che siano univoche per il dispositivo o contatta il fornitore per assistenza.\n"
+    },
+    {
+        "plugin_id": "142591",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione auto-dichiarato, la versione di PHP in esecuzione sul server web remoto è precedente alla 7.3.24.  È quindi affetta da multiple vulnerabilità.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.3.24 o successiva.\n"
+    },
+    {
+        "plugin_id": "138593",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione auto-dichiarato, la versione di PHP in esecuzione sul server web Windows remoto è la 7.2.x precedente alla 7.2.32, la 7.3.x precedente alla 7.3.20 o la 7.4.x precedente alla 7.4.8.  È quindi affetto da una vulnerabilità di divulgazione di informazioni. La libreria libcurl può essere ingannata per anteporre parte della password al nome host prima che venga risolto, potenzialmente trapelando la password parziale sulla rete e al/ai server DNS.",
+        "translate_mitigation": "Aggiorna a PHP 7.2.32, 7.3.20, 7.4.8 o versioni successive.\n"
+    },
+    {
+        "plugin_id": "135926",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione auto-dichiarato, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.30. È quindi affetta da molteplici vulnerabilità:\n\n- Un errore di lettura fuori dai limiti (out-of-bounds read) esiste in `urldecode()` a causa di controlli di validazione dei dati impropri. Un attaccante può sfruttarlo inserendo valori esadecimali negativi per far trapelare valori presenti in memoria prima dell'array.\n\n- Una vulnerabilità di iniezione di byte NULL esiste in `shell_exec()` e nell'operatore backtick a causa di una sanitizzazione dei dati inadeguata.\n\nSi noti che Nessus non ha testato questo problema, ma si è invece basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.2.30 o successiva.\n"
+    },
+    {
+        "plugin_id": "127131",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.21. È quindi affetta da vulnerabilità di overflow del buffer nelle funzioni exif_read_data e exif_scan_thumbnail.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.2.21 o successiva.\n"
+    },
+    {
+        "plugin_id": "140532",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, la versione di PHP in esecuzione sul server web remoto è la 7.2.x o la 7.3.x precedente alla 7.3.21.  È quindi vulnerabile a una falla di memoria nel componente LDAP. Un attaccante remoto non autenticato potrebbe sfruttare questo problema per causare una condizione di denial-of-service (DoS).",
+        "translate_mitigation": "Aggiorna a PHP versione 7.3.22 o successiva.\n"
+    },
+    {
+        "plugin_id": "130432",
+        "language": "italiano",
+        "translated_description": "Secondo quanto autodichiarato, il dispositivo di rete remoto esegue una versione di MikroTik RouterOS precedente alla 6.44.6 LTS o alla 6.45.x precedente alla 6.45.7. È quindi affetto da molteplici vulnerabilità:\n\n- **Traversal di percorso relativo nell'analisi NPK:** RouterOS 6.45.6 Stable, RouterOS 6.44.5 Long-term e versioni precedenti sono vulnerabili a una vulnerabilità di creazione di directory arbitraria tramite il campo del nome del pacchetto di aggiornamento. Se un utente autenticato installa un pacchetto dannoso, potrebbe essere creata una directory e abilitato lo shell dello sviluppatore. (CVE-2019-3976)\n\n- **Autoupgrade vulnerabile:** RouterOS 6.45.6 Stable, RouterOS 6.44.5 Long-term e versioni precedenti non validano sufficientemente da dove vengono scaricati i pacchetti di aggiornamento quando si utilizza la funzione di autoupgrade. Pertanto, un attaccante remoto può indurre il router a \"eseguire l'aggiornamento\" a una versione precedente di RouterOS e possibilmente ripristinare tutti gli username e le password del sistema. (CVE-2019-3977)\n\n- **Protezioni insufficienti di una risorsa critica (richieste/cache DNS):** Le versioni di RouterOS 6.45.6 Stable, 6.44.5 Long-term e versioni precedenti consentono agli attaccanti remoti non autenticati di attivare query DNS tramite la porta 8291. Le query vengono inviate dal router a un server scelto dall'attaccante. Le risposte DNS vengono memorizzate nella cache del router, con la possibilità di causare un avvelenamento della cache.\n\n- **Gestione delle risposte DNS impropria:** Le versioni di RouterOS 6.45.6 Stable, 6.44.5 Long-term e versioni precedenti sono vulnerabili a un attacco di dati non correlati a DNS. Il router aggiunge tutti i record A alla sua cache DNS anche quando i record non sono correlati al dominio interrogato. Pertanto, un server DNS controllato da un attaccante remoto può avvelenare la cache DNS del router tramite risposte dannose con record aggiuntivi e falsi.\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dal router.",
+        "translate_mitigation": "Aggiorna a MikroTik RouterOS 6.44.6 LTS, 6.45.7 e versioni successive.\n"
+    },
+    {
+        "plugin_id": "125855",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, l'applicazione phpMyAdmin ospitata sul server web remoto è precedente alla versione 4.8.6.  È quindi vulnerabile a un'iniezione SQL (SQLi) presente nella funzionalità \"designer\" di phpMyAdmin. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità per iniettare o manipolare query SQL nel database back-end, con conseguente divulgazione o manipolazione di dati arbitrari.\n\nSi noti che Nessus non ha tentato di sfruttare questi problemi, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a phpMyAdmin versione 4.8.6 o successiva.\nIn alternativa, applica le patch menzionate nei bollettini di sicurezza del fornitore.\n"
+    },
+    {
+        "plugin_id": "111216",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.8.  È quindi affetta da una vulnerabilità di esecuzione di codice arbitrario di tipo Use-After-Free.",
+        "translate_mitigation": "Aggiorna a PHP versione 7.2.8 o successiva.\n"
+    },
+    {
+        "plugin_id": "125639",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.19.\n\nÈ, quindi, affetta dalle seguenti vulnerabilità:\n\n  - Una vulnerabilità di inizializzazione non eseguita esiste in gdImageCreateFromXbm a causa del metodo sscanf che non è in grado di leggere un valore esadecimale. Un attaccante potrebbe sfruttare questo problema per causare la divulgazione di informazioni sensibili. (CVE-2019-11038)\n\n  - Una vulnerabilità di lettura fuori dai limiti esiste in iconv.c:_php_iconv_mime_decode() a causa di un overflow intero. Un attaccante potrebbe sfruttare questo problema per causare la divulgazione di informazioni sensibili. (CVE-2019-11039)\n\n  - Una condizione di overflow del buffer basata sulla heap esiste in php_jpg_get16. Un attaccante può sfruttarla per causare una condizione di negazione del servizio o l'esecuzione di codice arbitrario. (CVE-2019-11040)",
+        "translate_mitigation": "Effettua l'aggiornamento a PHP versione 7.2.19 o successiva.\n"
+    },
+    {
+        "plugin_id": "123754",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.17. È, quindi, affetta da multiple vulnerabilità:\n\n  - Una condizione di over-read di buffer basata su heap esiste in `php_ifd_get32s` in `exif.c`.\n\n  - Una condizione di overflow di buffer basata su heap esiste in `exif_iif_add_value` in `exif.c` a causa di un controllo non corretto della lunghezza dell'input.",
+        "translate_mitigation": "Aggiorna a PHP versione 7.2.17 o successiva.\n"
+    },
+    {
+        "plugin_id": "58987",
+        "language": "italiano",
+        "translated_description": "Secondo la sua versione, l'installazione di PHP sull'host remoto non è più supportata.\n\nLa mancanza di supporto implica che il fornitore non rilascerà più nuove patch di sicurezza per il prodotto. Di conseguenza, è probabile che contenga vulnerabilità di sicurezza.",
+        "translate_mitigation": "Esegui l'aggiornamento a una versione di PHP attualmente supportata.\n"
+    },
+    {
+        "plugin_id": "130276",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è precedente alla 7.1.33, alla 7.2.x precedente alla 7.2.24, o alla 7.3.x precedente alla 7.3.11.  È quindi affetta da una vulnerabilità di esecuzione di codice remoto dovuta a una convalida insufficiente dell'input utente. Un attaccante remoto non autenticato può sfruttare questo, inviando una richiesta appositamente creata, per causare l'esecuzione di codice arbitrario violando la direttiva fastcgi_split_path_info.",
+        "translate_mitigation": "Aggiorna a PHP versione 7.3.11 o successiva.\n"
+    },
+    {
+        "plugin_id": "134162",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è o la 7.2.x precedente alla 7.2.28, la 7.3.x precedente alla 7.3.15, o la 7.4.x precedente alla 7.4.3. È quindi affetto da multiple vulnerabilità:\n\n  - Una condizione di overflow del buffer basata sull'heap esiste nella funzione `phar_extract_file()` a causa di una terminazione del ciclo errata. Un attaccante remoto non autenticato può sfruttare questo per causare una condizione di denial of service o l'esecuzione di codice arbitrario. (CVE-2020-7061)\n\n  - Una vulnerabilità di denial of service (DoS) esiste nelle funzioni PHP `SessionUploadProgress` a causa di un Null Pointer Dereference. Un attaccante remoto non autenticato può sfruttare questo problema per causare l'arresto del servizio php. (CVE-2020-7062)\n\n  - Permessi file insicuri sulla funzione `buildFromIterator` concedono il permesso di accesso totale ai file Tar. (CVE-2020-7063)",
+        "translate_mitigation": "Effettua l'aggiornamento a PHP versione 7.2.28, 7.3.15, 7.4.3 o successiva.\n"
+    },
+    {
+        "plugin_id": "34850",
+        "language": "italiano",
+        "translated_description": "Il server web remoto contiene pagine web protette da autenticazione 'Basic' su testo in chiaro.\n\nUn attaccante che intercetta il traffico potrebbe ottenere login e password di utenti validi.",
+        "translate_mitigation": "Assicurati che l'autenticazione HTTP venga trasmessa tramite HTTPS.\n"
+    },
+    {
+        "plugin_id": "49067",
+        "language": "italiano",
+        "translated_description": "Il server web remoto ospita script CGI che non eseguono un'adeguata sanitizzazione delle stringhe di richiesta contenenti JavaScript dannoso. Sfruttando questa vulnerabilità, un attaccante potrebbe essere in grado di causare l'esecuzione di codice HTML arbitrario nel browser di un utente, all'interno del contesto di sicurezza del sito interessato.\n\nIl server web remoto potrebbe essere vulnerabile a injection IFRAME o attacchi di cross-site scripting (XSS):\n\n  - Le injection IFRAME permettono un \"deturpamento virtuale\" che potrebbe spaventare o irritare utenti creduloni. Tali injection sono a volte implementate per attacchi di phishing.\n\n  - Gli attacchi XSS sono stati ampiamente testati da altri quattro script.\n\n  - Alcune applicazioni (es. forum web) autorizzano un sottoinsieme di codice HTML senza effetti dannosi. In questo caso, ignorare questo avviso.",
+        "translate_mitigation": "Either limitare l'accesso all'applicazione vulnerabile oppure contattare il fornitore per un aggiornamento.\n"
+    },
+    {
+        "plugin_id": "44136",
+        "language": "italiano",
+        "translated_description": "Il server web remoto ospita almeno uno script CGI che non sanitizza adeguatamente le stringhe di richiesta contenenti JavaScript dannoso.\n\nSfruttando questa vulnerabilità, un attaccante potrebbe essere in grado di iniettare cookie arbitrari. A seconda della struttura dell'applicazione web, potrebbe essere possibile lanciare un attacco di \"session fixation\" usando questo meccanismo.\n\nSi prega di notare che:\n\n  - Nessus non ha verificato se l'attacco di session fixation sia fattibile.\n\n  - Questo non è l'unico vettore di attacco per la session fixation.",
+        "translate_mitigation": "Limitare l'accesso all'applicazione vulnerabile. Contattare il fornitore per una patch o un aggiornamento.\n"
+    },
+    {
+        "plugin_id": "26194",
+        "language": "italiano",
+        "translated_description": "Il server web remoto contiene diversi campi di form HTML con un input di tipo 'password' che trasmettono le loro informazioni a un server web remoto in chiaro.\n\nUn attaccante che intercetta il traffico tra il browser web e il server potrebbe ottenere login e password di utenti validi.",
+        "translate_mitigation": "Assicurati che ogni modulo contenente dati sensibili trasmetta i contenuti tramite HTTPS.\n"
+    },
+    {
+        "plugin_id": "121479",
+        "language": "italiano",
+        "translated_description": "Un'vulnerabilità di divulgazione di informazioni è presente nel server web remoto a causa della divulgazione del file web.config. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, tramite una semplice richiesta GET, per divulgare informazioni di configurazione potenzialmente sensibili.",
+        "translate_mitigation": "Assicurarsi che siano in atto le opportune restrizioni, oppure rimuovere il file web.config se non è necessario.\n"
+    },
+    {
+        "plugin_id": "201124",
+        "language": "italiano",
+        "translated_description": "La versione di VMware vCenter Server installata sull'host remoto è la 7.0 precedente alla 7.0U3q, oppure l'8.0 precedente alla 8.0U3. È quindi interessata da una vulnerabilità denial-of-service (DoS) come indicato nella nota VMSA-2024-0013.\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato unicamente sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a VMware vCenter Server 7.0U3q, o 8.0U3 o versione successiva.\n"
+    },
+    {
+        "plugin_id": "81606",
+        "language": "italiano",
+        "translated_description": "L'host remoto supporta suite crittografiche EXPORT_RSA con chiavi inferiori o uguali a 512 bit. Un attaccante può fattorizzare un modulo RSA a 512 bit in breve tempo.\n\nUn attaccante man-in-the-middle potrebbe essere in grado di effettuare un downgrade della sessione per utilizzare suite crittografiche EXPORT_RSA (es. CVE-2015-0204).  Pertanto, si raccomanda di rimuovere il supporto per le suite crittografiche deboli.",
+        "translate_mitigation": "Ricostruisci il servizio per rimuovere il supporto per le suite di crittografia EXPORT_RSA.\n"
+    },
+    {
+        "plugin_id": "31705",
+        "language": "italiano",
+        "translated_description": "L'host remoto supporta l'utilizzo di cipher SSL anonimi.  Sebbene ciò permetta ad un amministratore di configurare un servizio che cripta il traffico senza dover generare e configurare certificati SSL, non offre alcun modo per verificare l'identità dell'host remoto e rende il servizio vulnerabile ad attacchi man-in-the-middle.\n\nNota: Questo è considerevolmente più facile da sfruttare se l'attaccante si trova sulla stessa rete fisica.",
+        "translate_mitigation": "Ricostruisci l'applicazione interessata, se possibile, per evitare l'uso di crittografie deboli.\n"
+    },
+    {
+        "plugin_id": "134976",
+        "language": "italiano",
+        "translated_description": "Una vulnerabilità di esecuzione di comandi remoti esiste in HPE Integrated Lights-Out 5 (iLO 5) per server HPE Gen10 precedenti alla v1.35, HPE Integrated Lights-Out 4 (iLO 4) precedenti alla v2.61, e HPE Integrated Lights-Out 3 (iLO 3) precedenti alla v1.90.  Questa vulnerabilità potrebbe essere sfruttata in remoto per eseguire codice arbitrario, portando alla divulgazione di informazioni. Un attaccante remoto autenticato può sfruttare questa vulnerabilità per bypassare l'autenticazione ed eseguire comandi arbitrari.",
+        "translate_mitigation": "Aggiorna il firmware di: Per iLO 3, aggiorna il firmware alla versione 1.90 o successiva. Per iLO 4, aggiorna il firmware alla versione 2.61 o successiva. Per iLO 5, aggiorna il firmware alla versione 1.35 o successiva.  In alternativa, applica le soluzioni alternative descritte nel bollettino del fornitore.\n"
+    },
+    {
+        "plugin_id": "191711",
+        "language": "italiano",
+        "translated_description": "La versione di VMware ESXi installata sull'host remoto è precedente alla 7.0 Update 3p, alla 8.0 Update 1d, o alla 8.0 Update 2b. È quindi interessata da molteplici vulnerabilità come indicato nel bollettino VMSA-2024-0006:\n\n  - VMware ESXi, Workstation e Fusion contengono una vulnerabilità di tipo \"use-after-free\" nel controller USB XHCI. (CVE-2024-22252)\n\n  - VMware ESXi, Workstation e Fusion contengono una vulnerabilità di tipo \"use-after-free\" nel controller USB UHCI. (CVE-2024-22253)\n\n  - VMware ESXi contiene una vulnerabilità di scrittura fuori dai limiti (out-of-bounds write). (CVE-2024-22254)\n\n  - VMware ESXi, Workstation e Fusion contengono una vulnerabilità di divulgazione di informazioni nel controller USB UHCI. (CVE-2024-22255)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a VMware ESXi 7.0 Update 3p, 8.0 Update 1d, o 8.0 Update 2b o successivo.\n"
+    },
+    {
+        "plugin_id": "139571",
+        "language": "italiano",
+        "translated_description": "Secondo la sua versione auto-dichiarata, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.33. È quindi interessata da una vulnerabilità di tipo \"use-after-free\" nella funzione `phar_parse`, dovuta a una gestione scorretta della variabile `actual_alias`. Un attaccante remoto non autenticato potrebbe sfruttare questo problema dereferenziando un puntatore liberato, il che potrebbe portare all'esecuzione di codice arbitrario.",
+        "translate_mitigation": "Aggiorna a PHP versione 7.2.33\n"
+    },
+    {
+        "plugin_id": "11720",
+        "language": "italiano",
+        "translated_description": "Il server web remoto accetta connessioni criptate usando il Secure HyperText Transfer Protocol (S-HTTP), uno strato crittografico definito nel 1999 dall'RFC 2660 e mai ampiamente implementato.",
+        "translate_mitigation": "Il codice raro o obsoleto è spesso scarsamente testato. Quindi, sarebbe più sicuro disabilitare il supporto per S-HTTP e utilizzare HTTPS invece.\n"
+    },
+    {
+        "plugin_id": "125856",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, l'applicazione phpMyAdmin ospitata sul server web remoto è una versione 4.x precedente alla 4.9.0.  È quindi vulnerabile a un attacco di cross-site request forgery (XSRF). Un attaccante remoto può sfruttare questa vulnerabilità inducendo un utente a visitare una pagina web appositamente creata, permettendogli così di rivelare informazioni sensibili, impersonare l'identità dell'utente o iniettare contenuti dannosi nel browser della vittima.\n\nSi noti che Nessus non ha tentato di sfruttare queste vulnerabilità, ma si è basato unicamente sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento a phpMyAdmin versione 4.9.0 o successiva.  In alternativa, applica le patch menzionate negli avvisi del fornitore.\n"
+    },
+    {
+        "plugin_id": "10539",
+        "language": "italiano",
+        "translated_description": "È possibile interrogare il server nameserver remoto per nomi di terze parti.\n\nSe questo è il tuo nameserver interno, il vettore di attacco potrebbe essere limitato ai dipendenti o all'accesso degli ospiti, se consentito.\n\nSe stai sondando un nameserver remoto, questo permette a chiunque di usarlo per risolvere nomi di terze parti (come www.nessus.org).\nQuesto consente agli attaccanti di eseguire attacchi di avvelenamento della cache contro questo nameserver.\n\nSe l'host consente queste query ricorsive tramite UDP, può essere utilizzato per \"rimbalzare\" attacchi Denial of Service contro un'altra rete o sistema.",
+        "translate_mitigation": "Limitare le query ricorsive agli host che dovrebbero utilizzare questo nameserver (come quelli della LAN ad esso collegata).\n\nSe si utilizza Bind 8, questo può essere fatto usando l'istruzione 'allow-recursion' nella sezione 'options' del file named.conf.\n\nSe si utilizza Bind 9, è possibile definire un gruppo di indirizzi interni usando il comando 'acl'.\n\nQuindi, all'interno del blocco options, è possibile specificare esplicitamente:\n'allow-recursion { hosts_defined_in_acl }'\n\nSe si utilizza un altro nameserver, consultare la sua documentazione.\n"
+    },
+    {
+        "plugin_id": "88098",
+        "language": "italiano",
+        "translated_description": "Il server web remoto è affetto da una vulnerabilità di divulgazione di informazioni a causa dell'header ETag che fornisce informazioni sensibili che potrebbero aiutare un attaccante, come il numero inode dei file richiesti.",
+        "translate_mitigation": "Modifica l'header HTTP ETag del web server in modo che non includa gli inode dei file nel calcolo dell'header ETag. Fai riferimento alla documentazione di Apache linkata per maggiori informazioni.\n"
+    },
+    {
+        "plugin_id": "152853",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, la versione di PHP in esecuzione sul server web remoto è precedente alla 7.3.28.\n\nDi conseguenza, è vulnerabile a un'iniezione di header email, a causa di una mancata gestione corretta delle sequenze CR-LF nei campi header. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità inserendo caratteri di ritorno a capo negli header email per ottenere il controllo completo del contenuto degli header email.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.3.28 o successiva.\n"
+    },
+    {
+        "plugin_id": "136741",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione auto-dichiarato, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.31, la 7.3.x precedente alla 7.3.18 o la 7.4.x precedente alla 7.4.6.  È quindi affetta da una vulnerabilità Denial of Service (DoS) nel suo componente di caricamento file HTTP, dovuta a un'insufficienza nella pulizia dei file temporanei creati durante il processo di caricamento. Un attaccante remoto non autenticato può sfruttare questo problema, inviando ripetutamente caricamenti con nomi di file o campi lunghi, per esaurire lo spazio su disco e causare una condizione DoS.\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.2.31, 7.3.18, 7.4.6 o successiva.\n"
+    },
+    {
+        "plugin_id": "141355",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.34, la 7.3.x precedente alla 7.3.23 o la 7.4.x precedente alla 7.4.11. È quindi affetto da multiple vulnerabilità:\n\n- Una vulnerabilità crittografica debole esiste nella funzione openssl_encrypt di PHP a causa di un fallimento nell'utilizzare tutti i byte IV forniti. Un attaccante remoto non autenticato potrebbe sfruttare questo per ridurre il livello di sicurezza fornito dallo schema di crittografia o compromettere l'integrità dei dati crittografati (CVE-2020-7069).\n\n- Una vulnerabilità di falsificazione dei cookie esiste nella funzionalità di elaborazione HTTP di PHP. Un attaccante remoto non autenticato potrebbe sfruttare questo per falsificare i cookie HTTP che dovrebbero essere sicuri (CVE-2020-7070).\n\nSi noti che Nessus non ha testato questo problema, ma si è invece basato solo sulla versione autodichiarata dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.2.34, 7.3.23, 7.4.11 o successiva.\n"
+    },
+    {
+        "plugin_id": "11229",
+        "language": "italiano",
+        "translated_description": "Molti tutorial di installazione di PHP istruiscono l'utente a creare un file PHP che chiama la funzione PHP 'phpinfo()' per scopi di debug. Diverse applicazioni PHP possono anche includere un file simile. Accedendo a tale file, un attaccante remoto può scoprire una grande quantità di informazioni sul server web remoto, tra cui:\n\n  - Il nome utente di chi ha installato PHP e se si tratta di un utente SUDO.\n\n  - L'indirizzo IP dell'host.\n\n  - La versione del sistema operativo.\n\n  - La versione del server web.\n\n  - La directory root del server web.\n\n  - Informazioni di configurazione sull'installazione remota di PHP.",
+        "translate_mitigation": "Elimina il(i) file interessato(i).\n"
+    },
+    {
+        "plugin_id": "51892",
+        "language": "italiano",
+        "translated_description": "È stato dimostrato che la versione di OpenSSL sul server remoto consente la ripresa di una sessione con una crittografia più debole rispetto a quella utilizzata all'inizio della sessione. Ciò significa che un attaccante che intercetta (ad esempio, tramite sniffing) l'inizio di una connessione SSL può manipolare la cache delle sessioni di OpenSSL per far sì che le successive riprese di quella sessione utilizzino una crittografia più debole scelta dall'attaccante.\n\nSi noti che altre implementazioni SSL potrebbero essere interessate da questa vulnerabilità.",
+        "translate_mitigation": "Esegui l'aggiornamento a OpenSSL 0.9.8q / 1.0.0c o successivo, oppure contatta il tuo fornitore per una patch.\n"
+    },
+    {
+        "plugin_id": "138595",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione auto-dichiarato, l'applicazione phpMyAdmin ospitata sul server web remoto è una versione 4.x precedente alla 4.9.4, oppure una versione 5.x precedente alla 5.0.1.  È quindi vulnerabile a un attacco di SQL injection (SQLi) nella pagina degli account utente. Un attaccante remoto autenticato può sfruttare questa vulnerabilità iniettando codice SQL personalizzato al posto del proprio nome utente, per iniettare o manipolare query SQL nel database back-end, con conseguente divulgazione o manipolazione di dati arbitrari.\n\nSi noti che Nessus non ha tentato di sfruttare questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento a phpMyAdmin versione 4.9.4, 5.0.1 o successiva. In alternativa, applica le patch menzionate negli avvisi del fornitore.\n"
+    },
+    {
+        "plugin_id": "109579",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.5. È, quindi, affetta da multiple vulnerabilità.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.2.5 o successiva.\n"
+    },
+    {
+        "plugin_id": "119766",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.13.  È quindi affetta da molteplici vulnerabilità:\n\n  - Una vulnerabilità di iniezione di comandi arbitrari esiste nella funzione `imap_open` a causa di filtri inadeguati per i nomi delle caselle di posta prima di passarli ai comandi `rsh` o `ssh`. Un attaccante remoto autenticato può sfruttare questo inviando un nome di server IMAP appositamente creato per causare l'esecuzione di comandi arbitrari sul sistema di destinazione. (CVE-2018-19518)\n\n  - Un'over-read del buffer heap esiste nella funzione `phar_parse_pharfile`. Un attaccante remoto non autenticato può sfruttare questo per leggere la memoria allocata o non allocata oltre i dati effettivi quando si tenta di analizzare un file .phar. (CVE-2018-20783)",
+        "translate_mitigation": "Aggiorna a PHP versione 7.2.13 o successiva.\n"
+    },
+    {
+        "plugin_id": "123416",
+        "language": "italiano",
+        "translated_description": "Secondo il numero di versione autodichiarato, l'applicazione phpMyAdmin ospitata sul server web remoto è una versione 4.x precedente alla 4.8.5. È quindi interessata da almeno una delle seguenti vulnerabilità:\n\n- Esiste una vulnerabilità di tipo SQL injection (SQLi) in phpMyAdmin a causa di una convalida non corretta dell'input fornito dall'utente. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità per iniettare o manipolare query SQL nel database back-end, causando la divulgazione o la manipolazione di dati arbitrari (CVE-2019-6798).\n\n- Esiste una vulnerabilità di lettura di file arbitraria in phpMyAdmin quando l'impostazione di configurazione AllowArbitraryServer è impostata su true. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, tramite un server MySQL dannoso, per leggere file arbitrari e divulgare informazioni sensibili (CVE-2019-6799).\n\nSi noti che Nessus non ha tentato di sfruttare questi problemi, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento a phpMyAdmin versione 4.8.5 o successiva.\nIn alternativa, applica le patch menzionate negli avvisi del fornitore.\n"
+    },
+    {
+        "plugin_id": "124763",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.18.  È quindi affetta da una condizione di overflow di buffer basato su heap all'interno di `_estrndup` di `exif_process_IFD_TAG` nello script `exif.c`.\n\nUn attaccante remoto non autenticato può sfruttare questa vulnerabilità per causare una condizione di denial of service o l'esecuzione di codice arbitrario.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 7.2.18 o successiva.\n"
+    },
+    {
+        "plugin_id": "123828",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.16.  È quindi affetta da multiple vulnerabilità:\n\n  - Letture non inizializzate nel componente EXIF di PHP a causa di una gestione errata dei dati in `exif_process_IFD_in_MAKERNOTE` e `exif_process_IFD_in_TIFF`. (CVE-2019-9638, CVE-2019-9639, CVE-2019-9641)\n\n  - Una lettura non valida nel componente EXIF di PHP a causa di una gestione errata dei dati in `exif_process_SOFn`. (CVE-2019-9640)\n\n  - Esiste una vulnerabilità di bypass del controllo di accesso dovuta al modo in cui `rename()` è implementata. Questo potrebbe consentire a utenti non autorizzati di accedere a dati a cui altrimenti non avrebbero accesso. (CVE-2019-9637)",
+        "translate_mitigation": "Aggiorna a PHP versione 7.2.16 o successiva.\n"
+    },
+    {
+        "plugin_id": "121353",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP in esecuzione sul server web remoto è la 7.2.x precedente alla 7.2.14. È quindi affetta da molteplici vulnerabilità:\n\n- Una condizione di underflow intero esiste nella funzione `_gdContributionsAlloc` in `gd_interpolation.c`. Un attaccante remoto non autenticato può avere un impatto non specificato tramite vettori correlati alla decrementazione della variabile `u`. (CVE-2016-10166)\n\n- Una vulnerabilità di denial of service (DoS) esiste in `ext/imap/php_imap.c`. Un attaccante remoto non autenticato può sfruttare questo problema, tramite una stringa vuota nell'argomento del messaggio alla funzione `imap_mail`, per causare l'arresto dell'applicazione. (CVE-2018-19935)\n\n- Un buffer overflow basato su heap esiste in `gdImageColorMatch` in `gd_color_match.c` nella GD Graphics Library (aka LibGD) 2.2.5. Un attaccante remoto non autenticato può sfruttare questo tramite l'attivazione di chiamate `imagecolormatch` con dati di immagine creati appositamente, per causare una condizione di denial of service o l'esecuzione di codice arbitrario. (CVE-2019-6977)\n\n- Un buffer over-read basato su heap esiste nella funzione `xmlrpc_decode` a causa di una convalida errata dei dati di input. Un attaccante remoto non autenticato può sfruttare questo, tramite una richiesta appositamente creata, per causare una lettura di heap fuori dai limiti o una condizione di read-after-free, che potrebbe portare a una compromissione completa del sistema. (CVE-2019-9020)\n\n- Un buffer over-read basato su heap esiste nelle funzioni di lettura PHAR nell'estensione PHAR, a causa di un'implementazione errata delle operazioni di memoria. Un attaccante remoto non autenticato può sfruttare questo, convincendo un utente ad analizzare un nome di file appositamente creato sul sistema di destinazione, per divulgare informazioni sensibili. (CVE-2019-9021)\n\n- Una vulnerabilità di divulgazione di informazioni esiste nella funzione `dns_get_record` a causa di un'analisi errata delle risposte DNS. Un attaccante remoto non autenticato può sfruttare questo, tramite una risposta DNS appositamente creata inviata da un server DNS dannoso, per divulgare informazioni potenzialmente sensibili. (CVE-2019-9022)\n\n- Molteplici istanze di buffer over-read basate su heap esistono nelle funzioni di espressione regolare mbstring a causa di un'implementazione errata delle operazioni di memoria. Un attaccante remoto non autenticato può sfruttare questo inviando un'espressione regolare appositamente creata che contiene sequenze multibyte, per causare una condizione che potrebbe consentire all'attaccante di compromettere completamente il sistema di destinazione. (CVE-2019-9023)\n\n- Un errore di lettura fuori dai limiti esiste nella funzione `xmlrpc_decode` a causa di un'implementazione errata delle operazioni di memoria. Un attaccante remoto non autenticato può sfruttare questo, tramite un server XMLRPC ostile, per far sì che PHP legga dalla memoria al di fuori delle aree allocate. (CVE-2019-9024)",
+        "translate_mitigation": "Aggiorna a PHP versione 7.2.14 o successiva.\n"
+    },
+    {
+        "plugin_id": "87219",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSL installata sull'host remoto è precedente alla 0.9.8zh. È quindi vulnerabile, come indicato nella notifica di sicurezza 0.9.8zh.\n\n- L'implementazione di ASN1_TFLG_COMBINE in crypto/asn1/tasn_dec.c in OpenSSL prima della versione 0.9.8zh, 1.0.0 prima della 1.0.0t, 1.0.1 prima della 1.0.1q e 1.0.2 prima della 1.0.2e gestisce in modo errato gli errori causati da dati X509_ATTRIBUTE malformati, permettendo ad attaccanti remoti di ottenere informazioni sensibili dalla memoria di processo innescando un errore di decodifica in un'applicazione PKCS#7 o CMS. (CVE-2015-3195)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a OpenSSL versione 0.9.8zh o successiva.\n"
+    },
+    {
+        "plugin_id": "82030",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSL installata sull'host remoto è precedente alla 0.9.8zf. È quindi affetta da diverse vulnerabilità, come riportato nel bollettino di sicurezza 0.9.8zf.\n\n- Un meccanismo di protezione oracle nella funzione `get_client_master_key` in `s2_srvr.c` nell'implementazione SSLv2 di OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a sovrascrive byte MASTER-KEY errati durante l'utilizzo di suite di crittografia di esportazione, facilitando agli attaccanti remoti la decrittazione dei dati ciphertext TLS sfruttando un oracle di padding RSA Bleichenbacher, un problema correlato a CVE-2016-0800. (CVE-2016-0704)\n\n- La funzione `get_client_master_key` in `s2_srvr.c` nell'implementazione SSLv2 di OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a accetta un valore `CLIENT-MASTER-KEY CLEAR-KEY-LENGTH` diverso da zero per una crittografia arbitraria, permettendo agli attaccanti man-in-the-middle di determinare il valore MASTER-KEY e decrittare i dati ciphertext TLS sfruttando un oracle di padding RSA Bleichenbacher, un problema correlato a CVE-2016-0800. (CVE-2016-0703)\n\n- L'implementazione SSLv2 di OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a permette agli attaccanti remoti di causare una negazione del servizio (errore di asserzione `s2_lib.c` e uscita del daemon) tramite un messaggio CLIENT-MASTER-KEY manipolato. (CVE-2015-0293)\n\n- L'implementazione PKCS#7 di OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a non gestisce correttamente la mancanza di informazioni esterne ContentInfo, permettendo agli attaccanti di causare una negazione del servizio (dereferenziazione di puntatore NULL e crash dell'applicazione) sfruttando un'applicazione che elabora dati PKCS#7 arbitrari e fornendo dati malformati con codifica ASN.1, correlato a `crypto/pkcs7/pk7_doit.c` e `crypto/pkcs7/pk7_lib.c`. (CVE-2015-0289)\n\n- La funzione `ASN1_item_ex_d2i` in `crypto/asn1/tasn_dec.c` in OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a non re-inizializza le strutture dati CHOICE e ADB, il che potrebbe permettere agli attaccanti di causare una negazione del servizio (operazione di scrittura non valida e corruzione di memoria) sfruttando un'applicazione che si basa sul riutilizzo di strutture ASN.1. (CVE-2015-0287)\n\n- La funzione `ASN1_TYPE_cmp` in `crypto/asn1/a_type.c` in OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a non esegue correttamente i confronti di tipo booleano, permettendo agli attaccanti remoti di causare una negazione del servizio (operazione di lettura non valida e crash dell'applicazione) tramite un certificato X.509 manipolato a un endpoint che utilizza la funzionalità di verifica del certificato. (CVE-2015-0286)\n\n- Una vulnerabilità use-after-free nella funzione `d2i_ECPrivateKey` in `crypto/ec/ec_asn1.c` in OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a potrebbe permettere agli attaccanti remoti di causare una negazione del servizio (corruzione di memoria e crash dell'applicazione) o possibilmente avere altri impatti non specificati tramite un file di chiave privata Elliptic Curve (EC) malformato gestito in modo errato durante l'importazione. (CVE-2015-0209)\n\n- La funzione `X509_to_X509_REQ` in `crypto/x509/x509_req.c` in OpenSSL prima della 0.9.8zf, 1.0.0 prima della 1.0.0r, 1.0.1 prima della 1.0.1m e 1.0.2 prima della 1.0.2a potrebbe permettere agli attaccanti di causare una negazione del servizio (dereferenziazione di puntatore NULL e crash dell'applicazione) tramite una chiave di certificato non valida. (CVE-2015-0288)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento a OpenSSL versione 0.9.8zf o successiva.\n"
+    },
+    {
+        "plugin_id": "80566",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSL installata sull'host remoto è precedente alla 0.9.8zd. È quindi affetta da diverse vulnerabilità, come indicato nella notifica 0.9.8zd.\n\n- L'implementazione di BN_sqr in OpenSSL prima della 0.9.8zd, 1.0.0 prima della 1.0.0p e 1.0.1 prima della 1.0.1k non calcola correttamente il quadrato di un valore BIGNUM, il che potrebbe facilitare agli attaccanti remoti la violazione dei meccanismi di protezione crittografica tramite vettori non specificati, correlati a crypto/bn/asm/mips.pl, crypto/bn/asm/x86_64-gcc.c e crypto/bn/bn_asm.c. (CVE-2014-3570)\n\n- La funzione ssl3_get_key_exchange in s3_clnt.c in OpenSSL prima della 0.9.8zd, 1.0.0 prima della 1.0.0p e 1.0.1 prima della 1.0.1k consente ai server SSL remoti di effettuare attacchi di downgrade da RSA a EXPORT_RSA e facilitare la decrittazione tramite forza bruta offrendo una chiave RSA effimera debole in un ruolo non conforme, correlato al problema FREAK. NOTA: l'ambito di questa CVE riguarda solo il codice client basato su OpenSSL, non i problemi EXPORT_RSA associati ai server o ad altre implementazioni TLS. (CVE-2015-0204)\n\n- OpenSSL prima della 0.9.8zd, 1.0.0 prima della 1.0.0p e 1.0.1 prima della 1.0.1k non impone determinati vincoli sui dati del certificato, il che consente agli attaccanti remoti di violare un meccanismo di protezione basato su blacklist di certificati tramite impronta digitale includendo dati appositamente creati nella parte non firmata di un certificato, correlati a crypto/asn1/a_verify.c, crypto/dsa/dsa_asn1.c, crypto/ecdsa/ecs_vrf.c e crypto/x509/x_all.c. (CVE-2014-8275)\n\n- La funzione ssl3_get_key_exchange in s3_clnt.c in OpenSSL prima della 0.9.8zd, 1.0.0 prima della 1.0.0p e 1.0.1 prima della 1.0.1k consente ai server SSL remoti di effettuare attacchi di downgrade da ECDHE a ECDH e innescare una perdita di segretezza in avanti omettendo il messaggio ServerKeyExchange. (CVE-2014-3572)\n\n- OpenSSL prima della 0.9.8zd, 1.0.0 prima della 1.0.0p e 1.0.1 prima della 1.0.1k consente agli attaccanti remoti di causare una denial of service (dereferenziazione di puntatore NULL e crash dell'applicazione) tramite un messaggio DTLS appositamente creato che viene elaborato con un'operazione di lettura diversa per l'header della handshake rispetto al corpo della handshake, correlato alla funzione dtls1_get_record in d1_pkt.c e alla funzione ssl3_read_n in s3_pkt.c. (CVE-2014-3571)\n\n- La funzione ssl23_get_client_hello in s23_srvr.c in OpenSSL 0.9.8zc, 1.0.0o e 1.0.1j non gestisce correttamente i tentativi di utilizzare protocolli non supportati, il che consente agli attaccanti remoti di causare una denial of service (dereferenziazione di puntatore NULL e crash del daemon) tramite una handshake inattesa, come dimostrato da una handshake SSLv3 a un'applicazione no-ssl3 con una determinata gestione degli errori. NOTA: questo problema è diventato rilevante dopo la correzione CVE-2014-3568. (CVE-2014-3569)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a OpenSSL versione 0.9.8zd o successiva.\n"
+    },
+    {
+        "plugin_id": "73405",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di Apache 2.2.x in esecuzione sull'host remoto è precedente alla 2.2.27.  È quindi potenzialmente vulnerabile ai seguenti problemi:\n\n  - Un difetto nel modulo 'mod_dav' si verifica durante il tracciamento della lunghezza di un CDATA contenente spazi bianchi iniziali. Un attaccante remoto, con una richiesta DAV WRITE appositamente creata, può causare l'arresto del servizio. (CVE-2013-6438)\n\n  - Un difetto nel modulo 'mod_log_config' si verifica durante la registrazione di un cookie con un valore non assegnato. Un attaccante remoto, con una richiesta appositamente creata, può causare il crash del servizio. (CVE-2014-0098)\n\nSi noti che Nessus non ha effettivamente testato questi problemi, ma si è basato sulla versione indicata nel banner del server.",
+        "translate_mitigation": "Effettua l'aggiornamento ad Apache versione 2.2.27 o successiva. In alternativa, assicurati che i moduli interessati non siano in uso.\n"
+    },
+    {
+        "plugin_id": "152183",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 8.5.68. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_8.5.68_security-8`.\n\n- Apache Tomcat 10.0.0-M1 fino a 10.0.6, 9.0.0.M1 fino a 9.0.46 e 8.5.0 fino a 8.5.66 non analizzavano correttamente l'intestazione della richiesta HTTP `transfer-encoding` in alcune circostanze, portando alla possibilità di \"request smuggling\" quando utilizzato con un reverse proxy. Nello specifico: - Tomcat ignorava erroneamente l'intestazione `transfer-encoding` se il client dichiarava di accettare solo una risposta HTTP/1.0; - Tomcat accettava l'encoding `identity`; e - Tomcat non garantiva che, se presente, l'encoding `chunked` fosse l'encoding finale.\n(CVE-2021-33037)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 8.5.68 o successiva.\n"
+    },
+    {
+        "plugin_id": "197847",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 8.5.66.  È quindi vulnerabile, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_8.5.66_security-8`.\n\n- Una vulnerabilità nel JNDI Realm di Apache Tomcat consente ad un attaccante di autenticarsi utilizzando variazioni di un nome utente valido e/o di bypassare alcune delle protezioni fornite dal LockOut Realm. Questo problema interessa Apache Tomcat 10.0.0-M1 a 10.0.5; 9.0.0.M1 a 9.0.45; 8.5.0 a 8.5.65. (CVE-2021-30640)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 8.5.66 o successiva.\n"
+    },
+    {
+        "plugin_id": "194472",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 8.5.64. È quindi affetta da multiple vulnerabilità, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_8.5.64_security-8`.\n\n- Apache Tomcat versioni da 8.5.0 a 8.5.63, da 9.0.0-M1 a 9.0.43 e da 10.0.0-M1 a 10.0.2 non validavano correttamente i pacchetti TLS in entrata. Quando Tomcat era configurato per utilizzare NIO+OpenSSL o NIO2+OpenSSL per TLS, un pacchetto appositamente creato poteva essere usato per innescare un loop infinito, causando una denial of service.\n  (CVE-2021-41079)\n\n- Vulnerabilità nella generazione di messaggi di errore contenenti informazioni sensibili in Apache Tomcat. Questo problema riguarda Apache Tomcat versioni da 8.5.7 a 8.5.63 e da 9.0.0-M11 a 9.0.43. Si raccomanda agli utenti di effettuare l'upgrade alla versione 8.5.64 o successive, oppure 9.0.44 o successive, che contengono la correzione per il problema. (CVE-2024-21733)\n\nSi noti che Nessus non ha testato direttamente queste problematiche, ma si è basato esclusivamente sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 8.5.64 o successiva.\n"
+    },
+    {
+        "plugin_id": "102587",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.79. È quindi affetta da una vulnerabilità come riportato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.79_security-7`.\n\n- Il filtro CORS in Apache Tomcat 9.0.0.M1 - 9.0.0.M21, 8.5.0 - 8.5.15, 8.0.0.RC1 - 8.0.44 e 7.0.41 - 7.0.78 non aggiungeva un'intestazione HTTP Vary che indicasse che la risposta varia a seconda dell'origine (Origin). Questo permetteva, in alcune circostanze, l'avvelenamento della cache lato client e lato server. (CVE-2017-7674)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.79 o successiva.\n"
+    },
+    {
+        "plugin_id": "118035",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.91. È quindi vulnerabile, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.91_security-7`.\n\n- Quando il servlet predefinito nelle versioni di Apache Tomcat da 9.0.0.M1 a 9.0.11, da 8.5.0 a 8.5.33 e da 7.0.23 a 7.0.90 restituiva un reindirizzamento a una directory (ad esempio, reindirizzando a '/foo/' quando l'utente richiedeva '/foo'), un URL appositamente creato poteva essere utilizzato per causare il reindirizzamento a qualsiasi URI scelto dall'attaccante. (CVE-2018-11784)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.91 o successiva.\n"
+    },
+    {
+        "plugin_id": "106975",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.85. È quindi affetta da multiple vulnerabilità come indicato nella notifica di sicurezza `fixed_in_apache_tomcat_7.0.85_security-7`.\n\n- I vincoli di sicurezza definiti tramite annotazioni dei Servlet in Apache Tomcat 9.0.0.M1 fino a 9.0.4, 8.5.0 fino a 8.5.27, 8.0.0.RC1 fino a 8.0.49 e 7.0.0 fino a 7.0.84 venivano applicati solo dopo il caricamento del Servlet. Poiché i vincoli di sicurezza definiti in questo modo si applicano allo schema URL e a tutti gli URL sottostanti, era possibile - a seconda dell'ordine di caricamento dei Servlet - che alcuni vincoli di sicurezza non venissero applicati. Ciò avrebbe potuto esporre risorse ad utenti non autorizzati ad accedervi. (CVE-2018-1305)\n\n- Lo schema URL \"\" (stringa vuota) che mappa esattamente alla radice del contesto non veniva gestito correttamente in Apache Tomcat 9.0.0.M1 fino a 9.0.4, 8.5.0 fino a 8.5.27, 8.0.0.RC1 fino a 8.0.49 e 7.0.0 fino a 7.0.84 quando utilizzato come parte di una definizione di vincolo di sicurezza. Ciò causava l'ignoranza del vincolo. Era quindi possibile per utenti non autorizzati ottenere accesso a risorse dell'applicazione web che avrebbero dovuto essere protette. Solo i vincoli di sicurezza con uno schema URL vuoto erano interessati. (CVE-2018-1304)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.85 o successiva.\n"
+    },
+    {
+        "plugin_id": "121117",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.65. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.65_security-7`.\n\n- Una vulnerabilità di traversal directory in `RequestUtil.java` in Apache Tomcat 6.x prima della 6.0.45, 7.x prima della 7.0.65, e 8.x prima della 8.0.27 permette ad utenti remoti autenticati di aggirare le restrizioni previste di `SecurityManager` ed elencare una directory padre tramite /.. (slash dot dot) in un pathname utilizzato da un'applicazione web in una chiamata `getResource`, `getResourceAsStream`, o `getResourcePaths`, come dimostrato dalla directory $CATALINA_BASE/webapps. (CVE-2015-5174)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.65 o successiva.\n"
+    },
+    {
+        "plugin_id": "83764",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.59. È quindi affetta da una vulnerabilità come riportato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.59_security-7`.\n\n- L'implementazione di Expression Language (EL) in Apache Tomcat 6.x prima della 6.0.44, 7.x prima della 7.0.58 e 8.x prima della 8.0.16 non considera correttamente la possibilità di un'interfaccia accessibile implementata da una classe inaccessibile, il che consente agli aggressori di aggirare un meccanismo di protezione SecurityManager tramite un'applicazione web che sfrutta l'uso di privilegi errati durante la valutazione EL. (CVE-2014-7810)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.59 o successiva.\n"
+    },
+    {
+        "plugin_id": "148405",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.107. È quindi vulnerabile, come indicato nell'advisory `fixed_in_apache_tomcat_7.0.107_security-7`.\n\n- Quando si servono risorse da una posizione di rete utilizzando il file system NTFS, le versioni di Apache Tomcat 10.0.0-M1 a 10.0.0-M9, 9.0.0.M1 a 9.0.39, 8.5.0 a 8.5.59 e 7.0.0 a 7.0.106 erano suscettibili alla divulgazione del codice sorgente JSP in alcune configurazioni. La causa principale era il comportamento inaspettato dell'API JRE `File.getCanonicalPath()`, a sua volta causato dal comportamento inconsistente dell'API Windows (FindFirstFileW) in alcune circostanze. (CVE-2021-24122)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento ad Apache Tomcat versione 7.0.107 o successiva.\n"
+    },
+    {
+        "plugin_id": "117807",
+        "language": "italiano",
+        "translated_description": "Secondo quanto riportato nel suo banner, la versione di Apache in esecuzione sull'host remoto è 2.4.x precedente alla 2.4.35. È quindi vulnerabile al seguente problema:\n\n- Inviando continuamente frame SETTINGS di dimensione massima, una connessione HTTP/2 in corso potrebbe rimanere occupata e non scadere mai. Questo può essere sfruttato per un attacco DoS al server. Questo interessa solo i server che hanno abilitato il protocollo h2.\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache versione 2.4.35 o successiva.\n"
+    },
+    {
+        "plugin_id": "77285",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di PHP installata sull'host remoto è la 5.3.x precedente alla 5.3.29. È quindi affetta dalle seguenti vulnerabilità:\n\n  - Un errore di overflow del buffer basato sulla heap esiste nel file 'ext/date/lib/parse_iso_intervals.c' relativo alla gestione degli oggetti DateInterval che permette attacchi di denial of service (CVE-2013-6712).\n\n  - Un errore di controllo dei limiti esiste in relazione all'estensione Fileinfo, alla gestione del Composite Document Format (CDF) e alla funzione 'cdf_read_short_sector' (CVE-2014-0207).\n\n  - Una falla esiste nella funzione 'cdf_unpack_summary_info()' all'interno di 'src/cdf.c' dove si verificano multiple chiamate a file_printf durante la gestione di file CDF appositamente creati. Questo potrebbe permettere ad un attaccante dipendente dal contesto di far crashare l'applicazione web che usa PHP (CVE-2014-0237).\n\n  - Una falla esiste nella funzione 'cdf_read_property_info()' all'interno di 'src/cdf.c' dove si verifica un loop infinito durante la gestione di file CDF appositamente creati. Questo potrebbe permettere ad un attaccante dipendente dal contesto di far crashare l'applicazione web che usa PHP (CVE-2014-0238).\n\n  - Un errore di type-confusion esiste in relazione all'estensione Standard PHP Library (SPL) e alla funzione 'unserialize' (CVE-2014-3515).\n\n  - Un errore esiste in relazione agli script di configurazione e alla gestione dei file temporanei che potrebbe permettere l'utilizzo non sicuro di file (CVE-2014-3981).\n\n  - Un errore di overflow del buffer basato sulla heap esiste in relazione alla funzione 'dns_get_record' che potrebbe permettere l'esecuzione di codice arbitrario (CVE-2014-4049).\n\n  - Una lettura fuori dai limiti esiste in printf (Bug #67249).\n\nSi noti che Nessus non ha tentato di sfruttare questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.\n\nInoltre, si noti che la versione 5.3.29 segna la fine del supporto per il ramo PHP 5.3.x.",
+        "translate_mitigation": "Esegui l'aggiornamento a PHP versione 5.3.29 o successiva.\n"
+    },
+    {
+        "plugin_id": "84151",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSL installata sull'host remoto è precedente alla 0.9.8zg. È quindi vulnerabile a diversi problemi di sicurezza, come indicato nel bollettino di sicurezza 0.9.8zg.\n\n- La funzione `do_free_upto` in `crypto/cms/cms_smime.c` in OpenSSL prima della 0.9.8zg, 1.0.0 prima della 1.0.0s, 1.0.1 prima della 1.0.1n e 1.0.2 prima della 1.0.2b, permette ad attaccanti remoti di causare una negazione del servizio (loop infinito) tramite vettori che innescano un valore NULL di una struttura dati BIO, come dimostrato da un OID X.660 non riconosciuto per una funzione hash. (CVE-2015-1792)\n\n- La funzione `PKCS7_dataDecode` in `crypto/pkcs7/pk7_doit.c` in OpenSSL prima della 0.9.8zg, 1.0.0 prima della 1.0.0s, 1.0.1 prima della 1.0.1n e 1.0.2 prima della 1.0.2b, permette ad attaccanti remoti di causare una negazione del servizio (dereferenziamento di puntatore NULL e crash dell'applicazione) tramite un blob PKCS#7 che usa codifica ASN.1 e manca dei dati `EncryptedContent` interni. (CVE-2015-1790)\n\n- La funzione `X509_cmp_time` in `crypto/x509/x509_vfy.c` in OpenSSL prima della 0.9.8zg, 1.0.0 prima della 1.0.0s, 1.0.1 prima della 1.0.1n e 1.0.2 prima della 1.0.2b, permette ad attaccanti remoti di causare una negazione del servizio (lettura fuori dai limiti e crash dell'applicazione) tramite un campo di lunghezza manipolato nei dati ASN1_TIME, come dimostrato da un attacco contro un server che supporta l'autenticazione client con una callback di verifica personalizzata. (CVE-2015-1789)\n\n- Condizione di gara nella funzione `ssl3_get_new_session_ticket` in `ssl/s3_clnt.c` in OpenSSL prima della 0.9.8zg, 1.0.0 prima della 1.0.0s, 1.0.1 prima della 1.0.1n e 1.0.2 prima della 1.0.2b, quando utilizzata per un client multi-thread, permette ad attaccanti remoti di causare una negazione del servizio (doppia liberazione e crash dell'applicazione) o possibilmente avere altri impatti non specificati fornendo un NewSessionTicket durante un tentativo di riutilizzo di un ticket ottenuto in precedenza. (CVE-2015-1791)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento a OpenSSL versione 0.9.8zg o successiva.\n"
+    },
+    {
+        "plugin_id": "77086",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSL installata sull'host remoto è precedente alla 0.9.8zb.  È quindi affetta da multiple vulnerabilità come riportato nel bollettino 0.9.8zb.\n\n- La funzione `ssl3_send_client_key_exchange` in `s3_clnt.c` in OpenSSL 0.9.8 precedenti alla 0.9.8zb, 1.0.0 precedenti alla 1.0.0n, e 1.0.1 precedenti alla 1.0.1i permette a server DTLS remoti di causare una denial of service (dereferenziazione di puntatore NULL e crash dell'applicazione client) tramite un messaggio di handshake manipolato in combinazione con (1) una crittografia DH anonima o (2) una crittografia ECDH anonima. (CVE-2014-3510)\n\n- La funzione `OBJ_obj2txt` in `crypto/objects/obj_dat.c` in OpenSSL 0.9.8 precedenti alla 0.9.8zb, 1.0.0 precedenti alla 1.0.0n, e 1.0.1 precedenti alla 1.0.1i, quando viene utilizzato il pretty printing, non garantisce la presenza di caratteri '\\0', il che permette ad attaccanti dipendenti dal contesto di ottenere informazioni sensibili dalla memoria dello stack del processo leggendo l'output da `X509_name_oneline`, `X509_name_print_ex`, e altre funzioni non specificate. (CVE-2014-3508)\n\n- Perdita di memoria in `d1_both.c` nell'implementazione DTLS in OpenSSL 0.9.8 precedenti alla 0.9.8zb, 1.0.0 precedenti alla 1.0.0n, e 1.0.1 precedenti alla 1.0.1i permette ad attaccanti remoti di causare una denial of service (consumo di memoria) tramite frammenti DTLS di lunghezza zero che innescano una gestione impropria del valore di ritorno di una certa funzione di inserimento. (CVE-2014-3507)\n\n- `d1_both.c` nell'implementazione DTLS in OpenSSL 0.9.8 precedenti alla 0.9.8zb, 1.0.0 precedenti alla 1.0.0n, e 1.0.1 precedenti alla 1.0.1i permette ad attaccanti remoti di causare una denial of service (consumo di memoria) tramite messaggi di handshake DTLS manipolati che innescano allocazioni di memoria corrispondenti a valori di lunghezza elevati. (CVE-2014-3506)\n\n- Vulnerabilità di double free in `d1_both.c` nell'implementazione DTLS in OpenSSL 0.9.8 precedenti alla 0.9.8zb, 1.0.0 precedenti alla 1.0.0n, e 1.0.1 precedenti alla 1.0.1i permette ad attaccanti remoti di causare una denial of service (crash dell'applicazione) tramite pacchetti DTLS manipolati che innescano una condizione di errore. (CVE-2014-3505)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento a OpenSSL versione 0.9.8zb o successiva.\n"
+    },
+    {
+        "plugin_id": "77531",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di Apache 2.2.x in esecuzione sull'host remoto è precedente alla 2.2.28. È quindi affetta dalle seguenti vulnerabilità:\n\n- Un difetto nel modulo 'mod_headers' permette ad un attaccante remoto di iniettare header arbitrari. Questo viene fatto inserendo un header nella parte di trailer dei dati inviati usando la codifica di trasferimento a blocchi (chunked transfer encoding). (CVE-2013-5704)\n\n- Un difetto nel modulo 'mod_deflate' si verifica durante la gestione di corpi altamente compressi. Usando una richiesta appositamente creata, un attaccante remoto può sfruttarlo per causare una negazione del servizio (DoS) esaurendo le risorse di memoria e CPU. (CVE-2014-0118)\n\n- Il modulo 'mod_status' contiene una condizione di gara (race condition) che può essere innescata durante la gestione del pannello di controllo (scoreboard). Un attaccante remoto può sfruttarla per causare una negazione del servizio, eseguire codice arbitrario o ottenere informazioni di credenziali sensibili. (CVE-2014-0226)\n\n- Il modulo 'mod_cgid' manca di un meccanismo di timeout. Usando una richiesta appositamente creata, un attaccante remoto può usare questo difetto per causare una negazione del servizio facendo sì che i processi figlio rimangano attivi indefinitamente, riempiendo infine il pannello di controllo. (CVE-2014-0231)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache versione 2.2.29 o successiva.\n\nSi noti che la versione 2.2.28 non è mai stata ufficialmente rilasciata.\n"
+    },
+    {
+        "plugin_id": "147019",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 8.5.63. È quindi vulnerabile a molteplici falle di sicurezza, come indicato nell'avviso `fixed_in_apache_tomcat_8.5.63_security-8`.\n\n- La correzione per CVE-2020-9484 era incompleta. Utilizzando Apache Tomcat 10.0.0-M1 a 10.0.0, 9.0.0.M1 a 9.0.41, 8.5.0 a 8.5.61 o 7.0.0 a 7.0.107 con un caso limite di configurazione altamente improbabile, l'istanza di Tomcat rimaneva vulnerabile a CVE-2020-9494. Si noti che sia i prerequisiti precedentemente pubblicati per CVE-2020-9484 che le mitigazioni precedentemente pubblicate per CVE-2020-9484 si applicano anche a questo problema. (CVE-2021-25329)\n\n- Quando si risponde a nuove richieste di connessione h2c, le versioni di Apache Tomcat 10.0.0-M1 a 10.0.0, 9.0.0.M1 a 9.0.41 e 8.5.0 a 8.5.61 potrebbero duplicare le intestazioni di richiesta e una quantità limitata di corpo della richiesta da una richiesta all'altra, il che significa che l'utente A e l'utente B potrebbero entrambi vedere i risultati della richiesta dell'utente A. (CVE-2021-25122)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 8.5.63 o successiva.\n"
+    },
+    {
+        "plugin_id": "144054",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 8.5.60. È quindi affetta da multiple vulnerabilità come indicato nell'advisory `fixed_in_apache_tomcat_8.5.60_security-8`.\n\n- Quando si servono risorse da una locazione di rete utilizzando il file system NTFS, le versioni di Apache Tomcat 10.0.0-M1 a 10.0.0-M9, 9.0.0.M1 a 9.0.39, 8.5.0 a 8.5.59 e 7.0.0 a 7.0.106 erano suscettibili alla divulgazione del codice sorgente JSP in alcune configurazioni. La causa principale era il comportamento inaspettato dell'API JRE `File.getCanonicalPath()`, a sua volta causato dal comportamento incoerente dell'API di Windows (FindFirstFileW) in alcune circostanze. (CVE-2021-24122)\n\n- Durante l'indagine sul bug 64830, è stato scoperto che Apache Tomcat 10.0.0-M1 a 10.0.0-M9, 9.0.0-M1 a 9.0.39 e 8.5.0 a 8.5.59 poteva riutilizzare un valore dell'intestazione della richiesta HTTP dallo stream precedente ricevuto su una connessione HTTP/2 per la richiesta associata allo stream successivo. Sebbene ciò molto probabilmente avrebbe portato a un errore e alla chiusura della connessione HTTP/2, è possibile che informazioni potessero trapelare tra le richieste. (CVE-2020-17527)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache Tomcat versione 8.5.60 o successiva.\n"
+    },
+    {
+        "plugin_id": "121118",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.67. È quindi vulnerabile, come indicato nell'advisory `fixed_in_apache_tomcat_7.0.67_security-7`.\n\n- Una vulnerabilità di *session fixation* in Apache Tomcat 7.x prima della 7.0.66, 8.x prima della 8.0.30 e 9.x prima della 9.0.0.M2, quando vengono utilizzate impostazioni di sessione diverse per le distribuzioni di più versioni della stessa applicazione web, potrebbe consentire ad attaccanti remoti di dirottare le sessioni web sfruttando un campo `requestedSessionSSL` per una richiesta non intenzionale, correlato a `CoyoteAdapter.java` e `Request.java`.\n  (CVE-2015-5346)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache Tomcat versione 7.0.67 o successiva.\n"
+    },
+    {
+        "plugin_id": "121121",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.88. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza fixed_in_apache_tomcat_7.0.88_security-7.\n\n- Una gestione impropria dell'overflow nel decoder UTF-8 con caratteri supplementari può portare a un loop infinito nel decoder causando un Denial of Service (DoS). Versioni interessate: Apache Tomcat 9.0.0.M9 - 9.0.7, 8.5.0 - 8.5.30, 8.0.0.RC1 - 8.0.51, e 7.0.28 - 7.0.86. (CVE-2018-1336)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.88 o successiva.\n"
+    },
+    {
+        "plugin_id": "138851",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.105. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza fixed_in_apache_tomcat_7.0.105_security-7.\n\n- La lunghezza del payload in un frame WebSocket non è stata correttamente validata in Apache Tomcat 10.0.0-M1 a 10.0.0-M6, 9.0.0.M1 a 9.0.36, 8.5.0 a 8.5.56 e 7.0.27 a 7.0.104. Lunghezze di payload non valide potevano causare un loop infinito. Più richieste con lunghezze di payload non valide potevano portare a una negazione del servizio (CVE-2020-13935).\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.105 o successiva.\n"
+    },
+    {
+        "plugin_id": "197826",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.90. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.90_security-7`.\n\n- La verifica del nome host durante l'utilizzo di TLS con il client WebSocket era mancante. Ora è abilitata per impostazione predefinita. Versioni interessate: Apache Tomcat 9.0.0.M1 a 9.0.9, 8.5.0 a 8.5.31, 8.0.0.RC1 a 8.0.52 e 7.0.35 a 7.0.88. (CVE-2018-8034)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.90 o successiva.\n"
+    },
+    {
+        "plugin_id": "197838",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.99. È quindi affetta da molteplici vulnerabilità, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.99_security-7`.\n\n- Utilizzando l'autenticazione FORM con Apache Tomcat da 9.0.0.M1 a 9.0.29, da 8.5.0 a 8.5.49 e da 7.0.0 a 7.0.98, si è verificata una breve finestra temporale in cui un attaccante poteva eseguire un attacco di fissazione della sessione. La finestra era considerata troppo ristretta per un exploit pratico, ma, per precauzione, questo problema è stato trattato come una vulnerabilità di sicurezza. (CVE-2019-17563)\n\n- Quando Apache Tomcat da 9.0.0.M1 a 9.0.28, da 8.5.0 a 8.5.47, 7.0.0 e 7.0.97 è configurato con il JMX Remote Lifecycle Listener, un attaccante locale senza accesso al processo Tomcat o ai file di configurazione è in grado di manipolare il registro RMI per eseguire un attacco man-in-the-middle e catturare nomi utente e password utilizzati per accedere all'interfaccia JMX. L'attaccante può quindi utilizzare queste credenziali per accedere all'interfaccia JMX e ottenere il completo controllo dell'istanza Tomcat. (CVE-2019-12418)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.99 o successiva.\n"
+    },
+    {
+        "plugin_id": "124064",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.94.  È quindi vulnerabile a diverse falle di sicurezza, come indicato nell'avviso `fixed_in_apache_tomcat_7.0.94_security-7`.\n\n- Quando eseguito su Windows con `enableCmdLineArguments` abilitato, il Servlet CGI in Apache Tomcat 9.0.0.M1 - 9.0.17, 8.5.0 - 8.5.39 e 7.0.0 - 7.0.93 è vulnerabile all'esecuzione remota di codice a causa di un bug nel modo in cui la JRE passa gli argomenti della riga di comando a Windows. Il Servlet CGI è disabilitato per impostazione predefinita. L'opzione CGI `enableCmdLineArguments` è disabilitata per impostazione predefinita in Tomcat 9.0.x (e sarà disabilitata per impostazione predefinita in tutte le versioni in risposta a questa vulnerabilità). Per una spiegazione dettagliata del comportamento della JRE, consultare il blog di Markus Wulftange (https://codewhitesec.blogspot.com/2016/02/java-and-command-line-injections-in-windows.html) e questo blog MSDN archiviato (https://web.archive.org/web/20161228144344/https://blogs.msdn.microsoft.com/twistylittlepassagesallalike/2011/04/23/everyone-quotes-command-line-arguments-the-wrong-way/). (CVE-2019-0232)\n\n- Il comando `SSI printenv` in Apache Tomcat 9.0.0.M1 - 9.0.0.17, 8.5.0 - 8.5.39 e 7.0.0 - 7.0.93 ripete i dati forniti dall'utente senza escape ed è quindi vulnerabile a XSS. SSI è disabilitato per impostazione predefinita. Il comando `printenv` è destinato al debug ed è improbabile che sia presente in un sito web di produzione. (CVE-2019-0221)\n\nSi noti che Nessus non ha testato questi problemi, ma si è invece basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.94 o successiva.\n"
+    },
+    {
+        "plugin_id": "103782",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.82. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.82_security-7`.\n\n- Quando si eseguono versioni di Apache Tomcat da 9.0.0.M1 a 9.0.0, da 8.5.0 a 8.5.22, da 8.0.0.RC1 a 8.0.46 e da 7.0.0 a 7.0.81 con gli HTTP PUT abilitati (ad esempio, impostando il parametro di inizializzazione `readonly` del servlet predefinito su falso), era possibile caricare un file JSP sul server tramite una richiesta appositamente creata. Questo JSP poteva poi essere richiesto e qualsiasi codice in esso contenuto sarebbe stato eseguito dal server. (CVE-2017-12617)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.82 o successiva.\n"
+    },
+    {
+        "plugin_id": "103329",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.81.  È quindi vulnerabile a molteplici falle di sicurezza, come indicato nell'avviso di sicurezza fixed_in_apache_tomcat_7.0.81_security-7.\n\n- Utilizzando un VirtualDirContext con Apache Tomcat 7.0.0 fino a 7.0.80, era possibile bypassare i vincoli di sicurezza e/o visualizzare il codice sorgente dei JSP per le risorse servite dal VirtualDirContext utilizzando una richiesta appositamente creata. (CVE-2017-12616)\n\n- Eseguendo Apache Tomcat 7.0.0 fino a 7.0.79 su Windows con HTTP PUT abilitati (ad esempio, impostando il parametro di inizializzazione `readonly` di Default su false), era possibile caricare un file JSP sul server tramite una richiesta appositamente creata. Questo JSP poteva poi essere richiesto e qualsiasi codice in esso contenuto sarebbe stato eseguito dal server. (CVE-2017-12615)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.81 o successiva.\n"
+    },
+    {
+        "plugin_id": "197831",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.78. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.78_security-7`.\n\n- Il meccanismo di pagina di errore della specifica Java Servlet richiede che, quando si verifica un errore e una pagina di errore è configurata per l'errore verificatosi, la richiesta e la risposta originali vengano inoltrate alla pagina di errore. Ciò significa che la richiesta viene presentata alla pagina di errore con il metodo HTTP originale.\nSe la pagina di errore è un file statico, il comportamento previsto è quello di servire il contenuto del file come se si stesse elaborando una richiesta GET, indipendentemente dal metodo HTTP effettivo. Il Default Servlet in Apache Tomcat 9.0.0.M1 a 9.0.0.M20, 8.5.0 a 8.5.14, 8.0.0.RC1 a 8.0.43 e 7.0.0 a 7.0.77 non faceva questo. A seconda della richiesta originale, ciò potrebbe portare a risultati inaspettati e indesiderati per le pagine di errore statiche, incluso, se il DefaultServlet è configurato per consentire le scritture, la sostituzione o la rimozione della pagina di errore personalizzata.\nNote per altre pagine di errore fornite dall'utente: (1) Se non esplicitamente codificato diversamente, le JSP ignorano il metodo HTTP. Le JSP utilizzate come pagine di errore devono assicurarsi di gestire qualsiasi invio di errore come una richiesta GET, indipendentemente dal metodo effettivo. (2) Per impostazione predefinita, la risposta generata da un Servlet dipende dal metodo HTTP. I Servlet personalizzati utilizzati come pagine di errore devono assicurarsi di gestire qualsiasi invio di errore come una richiesta GET, indipendentemente dal metodo effettivo. (CVE-2017-5664)\n\nSi noti che Nessus non ha testato questo problema, ma si è invece basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.78 o successiva.\n"
+    },
+    {
+        "plugin_id": "197820",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.77. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.77_security-7`.\n\n- Un bug nella gestione delle richieste pipeline in Apache Tomcat 9.0.0.M1 - 9.0.0.M18, 8.5.0 - 8.5.12, 8.0.0.RC1 - 8.0.42, 7.0.0 - 7.0.76 e 6.0.0 - 6.0.52, quando veniva utilizzato `send file`, provocava la perdita della richiesta pipeline al completamento dell'elaborazione `send file` della richiesta precedente. Questo poteva causare l'apparizione di risposte apparentemente inviate per la richiesta sbagliata. Ad esempio, un agente utente che inviava le richieste A, B e C poteva ricevere la risposta corretta per la richiesta A, la risposta per la richiesta C per la richiesta B e nessuna risposta per la richiesta C. (CVE-2017-5647)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.77 o successiva.\n"
+    },
+    {
+        "plugin_id": "197823",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.75. È quindi vulnerabile, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.75_security-7`.\n\n- Un bug nella gestione degli errori del codice `send file` per il connettore HTTP NIO in Apache Tomcat 9.0.0.M1 - 9.0.0.M13, 8.5.0 - 8.5.8, 8.0.0.RC1 - 8.0.39, 7.0.0 - 7.0.73 e 6.0.16 - 6.0.48, causava l'aggiunta ripetuta dell'oggetto Processor corrente alla cache dei Processor. Questo, a sua volta, significava che lo stesso Processor poteva essere utilizzato per richieste concorrenti. La condivisione di un Processor poteva causare perdite di informazioni tra le richieste, includendo, ma non limitandosi a, l'ID di sessione e il corpo della risposta. Il bug è stato notato inizialmente nelle versioni 8.5.x e successive, dove sembra che la ristrutturazione del codice del connettore per le versioni 8.5.x in poi abbia reso più probabile l'osservazione del bug. Inizialmente si pensava che la ristrutturazione 8.5.x avesse introdotto il bug, ma ulteriori indagini hanno dimostrato che il bug è presente in tutte le versioni di Tomcat attualmente supportate. (CVE-2016-8745)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache Tomcat versione 7.0.75 o successiva.\n"
+    },
+    {
+        "plugin_id": "121119",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.70.  È quindi vulnerabile, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.70_security-7`.\n\n- La classe MultipartStream in Apache Commons Fileupload prima della versione 1.3.2, utilizzata in Apache Tomcat 7.x prima della 7.0.70, 8.x prima della 8.0.36, 8.5.x prima della 8.5.3, e 9.x prima della 9.0.0.M7 e altri prodotti, permette ad attaccanti remoti di causare una negazione del servizio (consumo di CPU) tramite una lunga stringa di delimitazione. (CVE-2016-3092)\n\nSi noti che Nessus non ha testato direttamente questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.70 o successiva.\n"
+    },
+    {
+        "plugin_id": "88936",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.68. È quindi affetta da diverse vulnerabilità, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.68_security-7`.\n\n- Il componente Mapper in Apache Tomcat 6.x prima della 6.0.45, 7.x prima della 7.0.68, 8.x prima della 8.0.30 e 9.x prima della 9.0.0.M2 elabora i redirect prima di considerare i vincoli di sicurezza e i filtri, permettendo agli attaccanti remoti di determinare l'esistenza di una directory tramite un URL privo del carattere '/' (slash) finale. (CVE-2015-5345)\n\n- Le applicazioni (1) Manager e (2) Host Manager in Apache Tomcat 7.x prima della 7.0.68, 8.x prima della 8.0.31 e 9.x prima della 9.0.0.M2 stabiliscono sessioni e inviano token CSRF per richieste nuove arbitrarie, permettendo agli attaccanti remoti di bypassare un meccanismo di protezione CSRF utilizzando un token. (CVE-2015-5351)\n\n- Apache Tomcat 6.x prima della 6.0.45, 7.x prima della 7.0.68, 8.x prima della 8.0.31 e 9.x prima della 9.0.0.M2 non inserisce `org.apache.catalina.manager.StatusManagerServlet` nell'elenco `org/apache/catalina/core/RestrictedServlets.properties`, permettendo agli utenti autenticati remoti di bypassare le restrizioni previste di `SecurityManager` e leggere richieste HTTP arbitrarie, e di conseguenza scoprire i valori degli ID di sessione, tramite un'applicazione web appositamente creata. (CVE-2016-0706)\n\n- L'implementazione della persistenza delle sessioni in Apache Tomcat 6.x prima della 6.0.45, 7.x prima della 7.0.68, 8.x prima della 8.0.31 e 9.x prima della 9.0.0.M2 gestisce in modo errato gli attributi di sessione, permettendo agli utenti autenticati remoti di bypassare le restrizioni previste di `SecurityManager` ed eseguire codice arbitrario in un contesto privilegiato tramite un'applicazione web che inserisce un oggetto appositamente creato in una sessione. (CVE-2016-0714)\n\n- Il metodo `setGlobalContext` in `org/apache/naming/factory/ResourceLinkFactory.java` in Apache Tomcat 7.x prima della 7.0.68, 8.x prima della 8.0.31 e 9.x prima della 9.0.0.M3 non considera se chi chiama `ResourceLinkFactory.setGlobalContext` è autorizzato, permettendo agli utenti autenticati remoti di bypassare le restrizioni previste di `SecurityManager` e leggere o scrivere dati di applicazione arbitrari, o causare una negazione del servizio (interruzione dell'applicazione), tramite un'applicazione web che imposta un contesto globale appositamente creato. (CVE-2016-0763)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache Tomcat versione 7.0.68 o successiva.\n"
+    },
+    {
+        "plugin_id": "147163",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.108. È quindi affetta da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.108_security-7`.\n\n- La correzione per CVE-2020-9484 era incompleta. Utilizzando Apache Tomcat 10.0.0-M1 - 10.0.0, 9.0.0.M1 - 9.0.41, 8.5.0 - 8.5.61 o 7.0.0 - 7.0.107 con un caso limite di configurazione altamente improbabile, l'istanza di Tomcat rimaneva vulnerabile a CVE-2020-9494. Si noti che sia i prerequisiti precedentemente pubblicati per CVE-2020-9484 che le mitigazioni precedentemente pubblicate per CVE-2020-9484 si applicano anche a questo problema. (CVE-2021-25329)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.108 o successiva.\n"
+    },
+    {
+        "plugin_id": "136770",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.104. È quindi interessata da una vulnerabilità come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.104_security-7`.\n\n- Quando si utilizzano le versioni di Apache Tomcat da 10.0.0-M1 a 10.0.0-M4, 9.0.0.M1 a 9.0.34, 8.5.0 a 8.5.54 e 7.0.0 a 7.0.103, se a) un attaccante è in grado di controllare il contenuto e il nome di un file sul server; e b) il server è configurato per utilizzare PersistenceManager con un FileStore; e c) PersistenceManager è configurato con `sessionAttributeValueClassNameFilter=null` (il valore predefinito a meno che non venga utilizzato un SecurityManager) o un filtro sufficientemente lasco da consentire la deserializzazione dell'oggetto fornito dall'attaccante; e d) l'attaccante conosce il percorso del file relativo dalla posizione di archiviazione utilizzata da FileStore al file su cui l'attaccante ha il controllo; quindi, utilizzando una richiesta appositamente elaborata, l'attaccante sarà in grado di innescare l'esecuzione di codice remoto tramite la deserializzazione del file sotto il suo controllo. Si noti che tutte le condizioni da a) a d) devono essere vere affinché l'attacco abbia successo. (CVE-2020-9484)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache Tomcat versione 7.0.104 o successiva.\n"
+    },
+    {
+        "plugin_id": "111788",
+        "language": "italiano",
+        "translated_description": "Secondo quanto riportato nel suo banner, la versione di Apache in esecuzione sull'host remoto è 2.4.x precedente alla 2.4.34. È quindi affetta dalle seguenti vulnerabilità:\n\n  - Tramite la creazione di richieste HTTP/2 appositamente formulate, ai worker verrebbero assegnati 60 secondi in più del necessario, portando all'esaurimento dei worker e a una denial of service (negazione del servizio). (CVE-2018-1333)\n\n  - Tramite la creazione di richieste HTTP appositamente formulate, il gestore di challenge mod_md dereferenzia un puntatore NULL causando un segfault nel processo figlio. Questo potrebbe essere sfruttato per effettuare un DoS sul server. (CVE-2018-8011)\n\nSi noti che Nessus non ha testato queste problematiche, ma si è invece basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento ad Apache versione 2.4.34 o successiva.\n"
+    },
+    {
+        "plugin_id": "103838",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di Apache in esecuzione sull'host remoto è 2.4.x precedente alla 2.4.28. È quindi vulnerabile ad una falla di sicurezza HTTP correlata alla direttiva <Limit {method}> in un file .htaccess.\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato unicamente sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Aggiorna ad Apache versione 2.4.28 o successiva.\n"
+    },
+    {
+        "plugin_id": "42424",
+        "language": "italiano",
+        "translated_description": "Inviando parametri appositamente creati a uno o più script CGI ospitati sul server web remoto, Nessus è stato in grado di ottenere una risposta molto diversa, il che suggerisce la possibilità di aver modificato il comportamento dell'applicazione e di aver avuto accesso diretto al database sottostante.\n\nUn attaccante potrebbe sfruttare questo problema per bypassare l'autenticazione, leggere dati riservati, modificare il database remoto o addirittura assumere il controllo del sistema operativo remoto.",
+        "translate_mitigation": "Modifica gli script CGI interessati in modo che eseguano correttamente l'escape degli argomenti.\n"
+    },
+    {
+        "plugin_id": "78552",
+        "language": "italiano",
+        "translated_description": "La versione di OpenSSL installata sull'host remoto è precedente alla 0.9.8zc. È quindi affetta da multiple vulnerabilità come indicato nell'avviso 0.9.8zc.\n\n- OpenSSL prima della 0.9.8zc, 1.0.0 prima della 1.0.0o, e 1.0.1 prima della 1.0.1j non applica correttamente l'opzione di build \"no-ssl3\", permettendo ad attaccanti remoti di aggirare le restrizioni di accesso previste tramite un handshake SSL 3.0, correlato a s23_clnt.c e s23_srvr.c. (CVE-2014-3568)\n\n- Perdita di memoria nella funzione tls_decrypt_ticket in t1_lib.c in OpenSSL prima della 0.9.8zc, 1.0.0 prima della 1.0.0o, e 1.0.1 prima della 1.0.1j permette ad attaccanti remoti di causare una negazione del servizio (consumo di memoria) tramite un ticket di sessione manipolato che innesca un fallimento del controllo di integrità. (CVE-2014-3567)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento a OpenSSL versione 0.9.8zc o successiva.\n"
+    },
+    {
+        "plugin_id": "171356",
+        "language": "italiano",
+        "translated_description": "Secondo la sua versione, Apache HTTP Server è compreso tra la 2.1.x e la 2.2.x.  Pertanto, non è più mantenuto dal suo fornitore.\n\nLa mancanza di supporto implica che il fornitore non rilascerà nuove patch di sicurezza per il prodotto. Di conseguenza, potrebbe contenere vulnerabilità di sicurezza.",
+        "translate_mitigation": "Aggiorna ad una versione di Apache HTTP Server attualmente supportata.\n"
+    },
+    {
+        "plugin_id": "101787",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di Apache in esecuzione sull'host remoto è 2.2.x precedente alla 2.2.34. È quindi affetta dalle seguenti vulnerabilità:\n\n- Una vulnerabilità di bypass dell'autenticazione esiste in httpd a causa di moduli di terze parti che utilizzano la funzione ap_get_basic_auth_pw() al di fuori della fase di autenticazione. Un attaccante remoto non autenticato può sfruttare questo per bypassare i requisiti di autenticazione. (CVE-2017-3167)\n\n- Una vulnerabilità di denial of service esiste in httpd a causa di un errore di dereferenziazione di puntatore NULL che viene attivato quando un modulo di terze parti chiama la funzione mod_ssl ap_hook_process_connection() durante una richiesta HTTP a una porta HTTPS. Un attaccante remoto non autenticato può sfruttare questo per causare una condizione di denial of service. (CVE-2017-3169)\n\n- Una vulnerabilità di denial of service esiste in httpd a causa di un errore di lettura fuori dai limiti nella funzione ap_find_token() che viene attivato durante la gestione di una sequenza di intestazioni di richiesta appositamente elaborata. Un attaccante remoto non autenticato può sfruttare questo per bloccare il servizio o forzare ap_find_token() a restituire un valore errato. (CVE-2017-7668)\n\n- Una vulnerabilità di denial of service esiste in httpd a causa di un errore di lettura fuori dai limiti in mod_mime che viene attivato durante la gestione di un'intestazione di risposta Content-Type appositamente elaborata. Un attaccante remoto non autenticato può sfruttare questo per divulgare informazioni sensibili o causare una condizione di denial of service. (CVE-2017-7679)\n\n- Una vulnerabilità di denial of service esiste in httpd a causa di un errore di inizializzazione o reimpostazione del segnaposto di valore nelle intestazioni [Proxy-]Authorization di tipo 'Digest' prima o tra assegnazioni chiave=valore successive da parte di mod_auth_digest. Un attaccante remoto non autenticato può sfruttare questo, fornendo una chiave iniziale senza assegnazione '=', per divulgare informazioni sensibili o causare una condizione di denial of service. (CVE-2017-9788)\n\nSi noti che Nessus non ha testato questi problemi, ma si è invece basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache versione 2.2.34 o successiva.\n"
+    },
+    {
+        "plugin_id": "100995",
+        "language": "italiano",
+        "translated_description": "Secondo il suo banner, la versione di Apache in esecuzione sull'host remoto è la 2.2.x precedente alla 2.2.33-dev o la 2.4.x precedente alla 2.4.26. È quindi interessata dalle seguenti vulnerabilità:\n\n  - Una vulnerabilità di bypass dell'autenticazione esiste a causa di moduli di terze parti che utilizzano la funzione ap_get_basic_auth_pw() al di fuori della fase di autenticazione. Un attaccante remoto non autenticato può sfruttare questo per bypassare i requisiti di autenticazione. (CVE-2017-3167)\n\n  - Un difetto di dereferenziazione di puntatore NULL esiste a causa delle chiamate di moduli di terze parti alla funzione mod_ssl ap_hook_process_connection() durante una richiesta HTTP a una porta HTTPS. Un attaccante remoto non autenticato può sfruttare questo per causare una condizione di denial of service. (CVE-2017-3169)\n\n  - Un difetto di dereferenziazione di puntatore NULL esiste in mod_http2 che viene attivato durante la gestione di una richiesta HTTP/2 appositamente creata. Un attaccante remoto non autenticato può sfruttare questo per causare una condizione di denial of service. Si noti che questa vulnerabilità non interessa la 2.2.x. (CVE-2017-7659)\n\n  - Un errore di lettura fuori dai limiti esiste nella funzione ap_find_token() a causa di una gestione impropria delle sequenze di intestazione. Un attaccante remoto non autenticato può sfruttare questo, tramite una sequenza di intestazione appositamente creata, per causare una condizione di denial of service. (CVE-2017-7668)\n\n  - Un errore di lettura fuori dai limiti esiste in mod_mime a causa di una gestione impropria delle intestazioni di risposta Content-Type. Un attaccante remoto non autenticato può sfruttare questo, tramite un'intestazione di risposta Content-Type appositamente creata, per causare una condizione di denial of service o la divulgazione di informazioni sensibili. (CVE-2017-7679)\n\nSi noti che Nessus non ha testato questi problemi, ma si è invece basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache versione 2.2.33-dev / 2.4.26 o successiva.\n"
+    },
+    {
+        "plugin_id": "171351",
+        "language": "italiano",
+        "translated_description": "Secondo la sua versione, Apache Tomcat è 7.0.x.  Pertanto, non è più mantenuto dal suo fornitore.\n\nLa mancanza di supporto implica che il fornitore non rilascerà nuove patch di sicurezza per il prodotto. Di conseguenza, potrebbe contenere vulnerabilità di sicurezza.",
+        "translate_mitigation": "Aggiorna ad una versione di Apache Tomcat attualmente supportata.\n"
+    },
+    {
+        "plugin_id": "111066",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.89. È quindi vulnerabile, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.89_security-7`.\n\n- Le impostazioni predefinite del filtro CORS fornito in Apache Tomcat da 9.0.0.M1 a 9.0.8, da 8.5.0 a 8.5.31, da 8.0.0.RC1 a 8.0.52, e da 7.0.41 a 7.0.88 sono insicure e abilitano `supportsCredentials` per tutte le origini. Ci si aspetta che gli utenti del filtro CORS lo abbiano configurato appropriatamente per il loro ambiente invece di utilizzare la configurazione predefinita. Pertanto, ci si aspetta che la maggior parte degli utenti non sia interessata da questo problema. (CVE-2018-8014)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.89 o successiva.\n"
+    },
+    {
+        "plugin_id": "121120",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.76. È quindi vulnerabile, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.76_security-7`.\n\n- Durante l'indagine sul bug 60718, si è notato che alcune chiamate ai listener delle applicazioni in Apache Tomcat 9.0.0.M1 - 9.0.0.M17, 8.5.0 - 8.5.11, 8.0.0.RC1 - 8.0.41 e 7.0.0 - 7.0.75 non utilizzavano l'oggetto facade appropriato.  Eseguendo un'applicazione non attendibile sotto un SecurityManager, era quindi possibile per tale applicazione non attendibile mantenere un riferimento all'oggetto request o response e quindi accedere e/o modificare informazioni associate ad un'altra applicazione web. (CVE-2017-5648)\n\nSi noti che Nessus non ha testato questo problema, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.76 o successiva.\n"
+    },
+    {
+        "plugin_id": "197848",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.73. È quindi affetta da multiple vulnerabilità come indicato nell'avviso di sicurezza fixed_in_apache_tomcat_7.0.73_security-7.\n\n- È possibile l'esecuzione di codice remoto con Apache Tomcat prima della 6.0.48, 7.x prima della 7.0.73, 8.x prima della 8.0.39, 8.5.x prima della 8.5.7, e 9.x prima della 9.0.0.M12 se viene utilizzato JmxRemoteLifecycleListener e un attaccante può raggiungere le porte JMX. Il problema esiste perché questo listener non è stato aggiornato per la consistenza con la patch Oracle CVE-2016-3427 che ha interessato i tipi di credenziali. (CVE-2016-8735)\n\n- Il codice in Apache Tomcat 9.0.0.M1 a 9.0.0.M11, 8.5.0 a 8.5.6, 8.0.0.RC1 a 8.0.38, 7.0.0 a 7.0.72, e 6.0.0 a 6.0.47 che analizzava la linea di richiesta HTTP permetteva caratteri non validi. Questo poteva essere sfruttato, in combinazione con un proxy che permetteva anche i caratteri non validi ma con un'interpretazione diversa, per iniettare dati nella risposta HTTP. Manipolando la risposta HTTP l'attaccante poteva avvelenare una web-cache, effettuare un attacco XSS e/o ottenere informazioni sensibili da richieste diverse dalle proprie. (CVE-2016-6816)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.73 o successiva.\n"
+    },
+    {
+        "plugin_id": "197818",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.72. È quindi affetta da diverse vulnerabilità, come indicato nell'avviso di sicurezza `fixed_in_apache_tomcat_7.0.72_security-7`.\n\n- L'implementazione di `ResourceLinkFactory` in Apache Tomcat 9.0.0.M1 - 9.0.0.M9, 8.5.0 - 8.5.4, 8.0.0.RC1 - 8.0.36, 7.0.0 - 7.0.70 e 6.0.0 - 6.0.45 non limitava l'accesso delle applicazioni web alle risorse JNDI globali solo a quelle esplicitamente collegate all'applicazione web. Pertanto, era possibile per un'applicazione web accedere a qualsiasi risorsa JNDI globale, indipendentemente dal fatto che fosse stato configurato un `ResourceLink` esplicito o meno. (CVE-2016-6797)\n\n- Un'applicazione web malevola in esecuzione su Apache Tomcat 9.0.0.M1 - 9.0.0.M9, 8.5.0 - 8.5.4, 8.0.0.RC1 - 8.0.36, 7.0.0 - 7.0.70 e 6.0.0 - 6.0.45 era in grado di bypassare un `SecurityManager` configurato tramite manipolazione dei parametri di configurazione per il Servlet JSP. (CVE-2016-6796)\n\n- Quando è configurato un `SecurityManager`, la capacità di un'applicazione web di leggere le proprietà di sistema dovrebbe essere controllata dal `SecurityManager`. In Apache Tomcat 9.0.0.M1 - 9.0.0.M9, 8.5.0 - 8.5.4, 8.0.0.RC1 - 8.0.36, 7.0.0 - 7.0.70, 6.0.0 - 6.0.45, la funzione di sostituzione delle proprietà di sistema per i file di configurazione poteva essere utilizzata da un'applicazione web malevola per bypassare il `SecurityManager` e leggere proprietà di sistema che non dovrebbero essere visibili. (CVE-2016-6794)\n\n- In Apache Tomcat 9.0.0.M1 - 9.0.0.M9, 8.5.0 - 8.5.4, 8.0.0.RC1 - 8.0.36, 7.0.0 - 7.0.70 e 6.0.0 - 6.0.45 un'applicazione web malevola era in grado di bypassare un `SecurityManager` configurato tramite un metodo di utilità Tomcat accessibile alle applicazioni web. (CVE-2016-5018)\n\n- Le implementazioni di `Realm` nelle versioni di Apache Tomcat 9.0.0.M1 - 9.0.0.M9, 8.5.0 - 8.5.4, 8.0.0.RC1 - 8.0.36, 7.0.0 - 7.0.70 e 6.0.0 - 6.0.45 non elaboravano la password fornita se il nome utente fornito non esisteva. Ciò rendeva possibile un attacco a tempo per determinare i nomi utente validi. Si noti che la configurazione predefinita include `LockOutRealm`, il che rende più difficile lo sfruttamento di questa vulnerabilità. (CVE-2016-0762)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Effettua l'aggiornamento ad Apache Tomcat versione 7.0.72 o successiva.\n"
+    },
+    {
+        "plugin_id": "197843",
+        "language": "italiano",
+        "translated_description": "La versione di Tomcat installata sull'host remoto è precedente alla 7.0.100. È quindi affetta da multiple vulnerabilità come indicato nell'advisory `fixed_in_apache_tomcat_7.0.100_security-7`.\n\n- Quando si utilizza l'Apache JServ Protocol (AJP), è necessario prestare attenzione quando si fidano le connessioni in entrata ad Apache Tomcat. Tomcat tratta le connessioni AJP come aventi un livello di trust superiore rispetto, ad esempio, ad una connessione HTTP simile. Se tali connessioni sono accessibili a un attaccante, possono essere sfruttate in modi inaspettati. In Apache Tomcat 9.0.0.M1-9.0.0.30, 8.5.0-8.5.50 e 7.0.0-7.0.99, Tomcat veniva fornito con un connettore AJP abilitato per impostazione predefinita che ascoltava su tutti gli indirizzi IP configurati. Ci si aspettava (e si raccomandava nella guida alla sicurezza) che questo connettore venisse disabilitato se non necessario. Questo report di vulnerabilità ha identificato un meccanismo che consentiva: - la restituzione di file arbitrari da qualsiasi punto dell'applicazione web - l'elaborazione di qualsiasi file nell'applicazione web come JSP. Inoltre, se l'applicazione web consentiva il caricamento di file e memorizzava tali file all'interno dell'applicazione web (o l'attaccante era in grado di controllare il contenuto dell'applicazione web con altri mezzi), questo, insieme alla possibilità di elaborare un file come JSP, rendeva possibile l'esecuzione di codice remoto. È importante notare che la mitigazione è necessaria solo se una porta AJP è accessibile a utenti non attendibili. Gli utenti che desiderano adottare un approccio di difesa approfondita e bloccare il vettore che consente la restituzione di file arbitrari e l'esecuzione come JSP possono effettuare l'upgrade ad Apache Tomcat 9.0.31, 8.5.51 o 7.0.100 o successive. Sono state apportate diverse modifiche alla configurazione predefinita del connettore AJP in 9.0.31 per rafforzare la configurazione predefinita. È probabile che gli utenti che effettuano l'upgrade a 9.0.31, 8.5.51 o 7.0.100 o successive dovranno apportare piccole modifiche alle proprie configurazioni. (CVE-2020-1938)\n\n- In Apache Tomcat 9.0.0.M1-9.0.30, 8.5.0-8.5.50 e 7.0.0-7.0.99, il codice di analisi dell'intestazione HTTP utilizzava un approccio all'analisi di fine riga che consentiva l'analisi di alcune intestazioni HTTP non valide come valide. Ciò ha portato alla possibilità di HTTP Request Smuggling se Tomcat si trovava dietro un proxy inverso che gestiva in modo errato l'intestazione Transfer-Encoding non valida in un modo particolare. Un tale proxy inverso è considerato improbabile. (CVE-2020-1935)\n\n- Il refactoring presente in Apache Tomcat 9.0.28-9.0.30, 8.5.48-8.5.50 e 7.0.98-7.0.99 ha introdotto una regressione. Il risultato della regressione è stato che le intestazioni Transfer-Encoding non valide sono state elaborate in modo errato, portando alla possibilità di HTTP Request Smuggling se Tomcat si trovava dietro un proxy inverso che gestiva in modo errato l'intestazione Transfer-Encoding non valida in un modo particolare. Un tale proxy inverso è considerato improbabile. (CVE-2019-17569)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione autodichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache Tomcat versione 7.0.100 o successiva.\n"
+    },
+    {
+        "plugin_id": "122060",
+        "language": "italiano",
+        "translated_description": "Secondo il banner, la versione di Apache in esecuzione sull'host remoto è la 2.4.x precedente alla 2.4.33. È quindi affetta da diverse vulnerabilità:\n\n  - Una vulnerabilità di scrittura fuori dai limiti (out of bounds write) esiste in mod_authnz_ldap con AuthLDAPCharsetConfig abilitato. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, tramite il valore dell'header Accept-Language, per causare l'arresto dell'applicazione. (CVE-2017-15710)\n  - Una vulnerabilità di caricamento di file arbitrario esiste nel componente FilesMatch dove un nome file dannoso può essere creato per corrispondere al controllo dell'espressione per un carattere di nuova riga. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, tramite il carattere di nuova riga, per caricare file arbitrari sull'host remoto, soggetti ai privilegi dell'utente. (CVE-2017-15715)\n\n  - Una vulnerabilità nella gestione delle sessioni esiste nel componente mod_session a causa dell'abilitazione di SessionEnv e dell'inoltro dei dati della sessione all'applicazione CGI. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, manomettendo HTTP_SESSION e usando un header di sessione, per influenzare il contenuto. (CVE-2018-1283)\n\n  - Una vulnerabilità di accesso fuori dai limiti (out of bounds access) esiste quando viene raggiunto il limite di dimensione. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità per causare il crash del server HTTP Apache. (CVE-2018-1301)\n\n  - Una vulnerabilità di scrittura dopo la liberazione (write after free) esiste nello stream HTTP/2 a causa di un puntatore NULL scritto in un'area di memoria liberata. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità per eseguire codice arbitrario. (CVE-2018-1302)\n  - Una vulnerabilità di lettura fuori dai limiti (out of bounds read) esiste in mod_cache_socache. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità, tramite un header di richiesta HTTP appositamente creato, per causare l'arresto dell'applicazione. (CVE-2018-1303)\n\n  - Una vulnerabilità di digest debole esiste nell'autenticazione digest HTTP. Un attaccante remoto non autenticato può sfruttare questa vulnerabilità in un cluster di server configurati per utilizzare un'autenticazione digest comune, per riprodurre le richieste HTTP tra i server senza essere rilevato. (CVE-2018-1312)\n\nSi noti che Nessus non ha testato questi problemi, ma si è basato solo sul numero di versione auto-dichiarato dall'applicazione.",
+        "translate_mitigation": "Esegui l'aggiornamento ad Apache versione 2.4.33 o successiva.\n"
     }
 ]

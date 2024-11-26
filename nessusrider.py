@@ -42,18 +42,19 @@ def main(scan_id, re_id, language, verify_ssl):
 
     findings_ghostwriter = convert_findings(vulnerabilities, re_id, gemini_model, language)
 
-    ghostwriter_client.update_findings(findings_ghostwriter)
+    ghostwriter_client.insert_findings(findings_ghostwriter)
 
 
 if __name__ == "__main__":
+    # todo import .env
     print(colored_art("Nessus Rider", style="starwars"))
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     parser = argparse.ArgumentParser(description="Nessus to Ghostwriter Import Tool")
     parser.add_argument("-nessus_scan_ids", type=str, required=True,
                         help="The ID of the Nessus scan (if you have multiple scans separated by comma)")
-    parser.add_argument("-ghostwriter_project_id", type=str, required=True, help="The ID of the Ghostwriter project")
+    parser.add_argument("-ghostwriter_report_id", type=str, required=True, help="The ID of the Ghostwriter project")
     parser.add_argument("-insecure", action="store_false", help="Disable SSL certificate verification")
     parser.add_argument("-language", type=str, default="english", help="The language (default: English)")
     args = parser.parse_args()
 
-    main(args.nessus_scan_ids, args.ghostwriter_project_id, args.language, args.insecure)
+    main(args.nessus_scan_ids, args.ghostwriter_report_id, args.language, args.insecure)

@@ -1,10 +1,11 @@
 import json
 import os
 
+from tqdm import tqdm
 from time import sleep
+from art import text2art
 from logger_config import setup_logger
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from art import text2art
 
 logger = setup_logger(name="Utils")
 
@@ -52,10 +53,12 @@ def save_to_json(data, filename="file.json"):
 def convert_findings(input_data, report_id, gemini_model, language):
     findings = []
     quota_tier_gemini = 0
-    for item in input_data:
+    # for item in input_data:
+    for item in tqdm(input_data, desc="Findings ", ncols=100, position=0, dynamic_ncols=True):
         output = item['outputs']
         plugin_description = item['info']['plugindescription']
 
+        # todo put parameters in config file
         if plugin_description['severity'] >= 1:
             # Extract risk information
             cvss_vector, cvss_score = extract_risk_info(plugin_description)
@@ -63,8 +66,10 @@ def convert_findings(input_data, report_id, gemini_model, language):
             # Build affected entities table
             affected_entities_out = build_affected_entities_table(output)
 
+            plugin_output = build_plugins_output(output)
+
             # Generate references
-            references_output = generate_references(plugin_description)
+            references_output = build_references(plugin_description)
 
             # Create finding entry
             if language.lower() == "english":
@@ -72,12 +77,14 @@ def convert_findings(input_data, report_id, gemini_model, language):
                     plugin_description['pluginname'], report_id, plugin_description['severity'] + 1,
                     affected_entities_out, cvss_score, cvss_vector, references_output,
                     str(plugin_description['pluginattributes']['description']),
-                    str(plugin_description['pluginattributes'].get('solution', ''))
+                    str(plugin_description['pluginattributes'].get('solution', '')),
+                    plugin_output
                 )
             else:
                 # todo add log and put parameters in config file
                 if quota_tier_gemini > 14:
-                    sleep(90)
+                    logger.info(f"Gemini tier quota reached. Let's wait 90 seconds. Quota: {quota_tier_gemini}")
+                    sleep(75)
                     quota_tier_gemini = 0
 
                 translated_description, translate_mitigation, translated = get_translation(plugin_description,
@@ -94,13 +101,17 @@ def convert_findings(input_data, report_id, gemini_model, language):
                     plugin_description['pluginname'], report_id, plugin_description['severity'] + 1,
                     affected_entities_out, cvss_score, cvss_vector, references_output,
                     translated_description,
-                    translate_mitigation
+                    translate_mitigation,
+                    plugin_output
                 )
 
             findings.append(finding)
         else:
             logger.info(f"Skipping {plugin_description['pluginname']} id: {plugin_description['pluginid']}")
 
+    findings = sorted(findings, key=lambda x: float(x['cvssScore']), reverse=True)
+    for position, finding in enumerate(findings):
+        finding['position'] = position + 1
     return findings
 
 
@@ -130,7 +141,7 @@ def get_translation(plugin_description, gemini_model, language, translations_fil
             "Translate the following text into " + language + " : " + str(
                 plugin_description['pluginattributes']['description']), safety_settings=gemini_model_safety_settings)
 
-        sleep(2)
+        # sleep(1)
 
         logger.debug(f"Translate this text: {plugin_description['pluginattributes'].get('solution', '')}")
         translate_mitigation = gemini_model.generate_content(
@@ -171,6 +182,7 @@ def save_translation(plugin_id, language, translated_description, translated_mit
     """
     Save a new translation to the JSON file.
     """
+    logger.info(f"Saving translation to {file_path} ")
     new_translation = {
         "plugin_id": plugin_id,
         "language": language,
@@ -198,7 +210,7 @@ def extract_risk_info(plugin_description):
     """
     risk_info = plugin_description.get('pluginattributes', {}).get('risk_information', {})
     cvss_vector = risk_info.get('cvss3_vector') or risk_info.get('cvss_vector', "Not Provided")
-    cvss_score = risk_info.get('cvss3_base_score') or risk_info.get('cvss_base_score', "0.0")
+    cvss_score = float(risk_info.get('cvss3_base_score')) or float(risk_info.get('cvss_base_score', "0.0"))
     return cvss_vector, cvss_score
 
 
@@ -225,7 +237,21 @@ def build_affected_entities_table(outputs):
     return table_html
 
 
-def generate_references(plugin_description):
+def build_plugins_output(outputs):
+    plugins_output = ""
+    for output in outputs:
+        tmp = ""
+        for port, hosts in output["ports"].items():
+            for host in hosts:
+                hostname = host["hostname"]
+                port_number, protocol, _ = port.split(" / ")
+                tmp = tmp + f"{hostname}:{port_number}<br>"
+        tmp = tmp + output["plugin_output"] + "<br><br>"
+        plugins_output += tmp
+    return plugins_output
+
+
+def build_references(plugin_description):
     """
     Generate a string of references from plugin description.
     """
@@ -247,7 +273,7 @@ def generate_references(plugin_description):
 
 
 def create_finding_entry(plugin_name, report_id, severity, affected_entities, cvss_score, cvss_vector,
-                         references, plugin_description, plugin_mitigation):
+                         references, plugin_description, plugin_mitigation, replication_steps):
     """
     Create a dictionary entry for a single finding.
     """
@@ -259,7 +285,9 @@ def create_finding_entry(plugin_name, report_id, severity, affected_entities, cv
         "affectedEntities": affected_entities,
         "description": plugin_description,
         "mitigation": plugin_mitigation,
-        "cvssScore": str(cvss_score),
+        "cvssScore": cvss_score,
         "cvssVector": str(cvss_vector),
-        "references": str(references)
+        "references": str(references),
+        "replication_steps": replication_steps,
+        "position": 0
     }

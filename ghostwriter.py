@@ -1,3 +1,5 @@
+from time import sleep
+
 import requests
 
 from logger_config import setup_logger
@@ -23,7 +25,7 @@ class Ghostwriter:
             "Content-Type": "application/json"
         }
 
-    def update_findings(self, findings_data):
+    def insert_findings(self, findings_data):
         """
         Send a GraphQL mutation to insert a report of findings into the Ghostwriter API.
 
@@ -40,39 +42,39 @@ class Ghostwriter:
             returning {
               id
               title
-              reportId
-              findingTypeId
-              severityId
-              affectedEntities
-              description
-              mitigation
               cvssScore
-              cvssVector
-              references
+              position
             }
           }
         }
         """
-        variables = {"findings": findings_data}
-        payload = {"query": query, "variables": variables}
+        for finding in findings_data:
+            variables = {"findings": finding}
+            payload = {"query": query, "variables": variables}
 
-        try:
-            response = requests.post(url, headers=self.headers, json=payload, verify=self.verify_ssl)
-            response.raise_for_status()
+            try:
+                response = requests.post(url, headers=self.headers, json=payload, verify=self.verify_ssl)
+                # this crap is because otherwise the order of the findings entered is not respected
+                sleep(1)
+                response.raise_for_status()
 
-            response_data = response.json()
-            if response.status_code == 200 and "errors" not in response_data:
-                logger.info("Data inserted successfully into Ghostwriter.")
-                logger.debug(f"Response: {response_data}")
-                return response_data
+                response_data = response.json()
+                if response.status_code == 200 and "errors" not in response_data:
+                    title = finding["title"]
+                    logger.info(f"{title} inserted successfully into Ghostwriter")
+                    logger.debug(f"Response: {response_data}")
+                    # return response_data
 
-            else:
-                logger.error(f"Failed to insert data. Response: {response_data}")
-                return None
+                else:
+                    logger.error(f"Failed to insert data. Response: {response_data}")
+                    # return None
 
-        except requests.exceptions.RequestException as e:
-            logger.error(f"An error occurred while updating Ghostwriter: {e}")
-            return None
+            except requests.exceptions.RequestException as e:
+                logger.error(f"An error occurred while updating Ghostwriter: {e}")
+                # return None
+
+    def update_findings(self, findings_data):
+        return None
 
     def test_connection(self):
-        None
+        return None

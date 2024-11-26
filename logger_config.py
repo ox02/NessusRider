@@ -1,4 +1,7 @@
 import logging
+import time
+from tqdm import tqdm
+
 
 
 class ColoredFormatter(logging.Formatter):
@@ -12,11 +15,6 @@ class ColoredFormatter(logging.Formatter):
     }
     RESET = '\033[0m'
 
-    # def format(self, record):
-    #     # Add the appropriate color based on the logging level
-    #     log_color = self.COLORS.get(record.levelname, self.RESET)
-    #     record.levelname = f"{log_color}{record.levelname}{self.RESET}"
-    #     return super().format(record)
     def format(self, record):
         # Add the appropriate color based on the logging level
         log_color = self.COLORS.get(record.levelname, self.RESET)

@@ -62,14 +62,14 @@ python nessusrider.py -nessus_scan_ids <scan_id> -ghostwriter_project_id <projec
 ### Arguments
 
 - `-nessus_scan_ids` (required): The ID of the Nessus scan(s) to process. Multiple scan IDs can be provided, separated by commas.
-- `-ghostwriter_project_id` (required): The ID of the Ghostwriter project where the findings will be added.
+- `-ghostwriter_report_id` (required): The ID of the Ghostwriter report where the findings will be added.
 - `-insecure`: Disable SSL verification for API requests.
 - `-language`: The language of the generated findings. Defaults to English.
 
 ### Example
 
 ```bash
-python nessusrider.py -nessus_scan_ids "12345,67890" -ghostwriter_project_id "555" -language "italian"
+python nessusrider.py -nessus_scan_ids "12345,67890" -ghostwriter_report_id "555" -language "italian"
 ```
 
 ## Environment Variables
