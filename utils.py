@@ -246,7 +246,8 @@ def build_plugins_output(outputs):
                 hostname = host["hostname"]
                 port_number, protocol, _ = port.split(" / ")
                 tmp = tmp + f"{hostname}:{port_number}<br>"
-        tmp = tmp + output["plugin_output"] + "<br><br>"
+        if output["plugin_output"] is not None:
+            tmp = tmp + output.get("plugin_output","") + "<br><br>"
         plugins_output += tmp
     return plugins_output
 

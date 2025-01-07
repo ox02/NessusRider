@@ -1,6 +1,4 @@
 import logging
-import time
-from tqdm import tqdm
 
 
 
@@ -52,5 +50,4 @@ def setup_logger(name="NessusRider", level=logging.DEBUG):
     # Add the handler to the logger, avoiding duplicate handlers
     if not logger.hasHandlers():
         logger.addHandler(ch)
-
     return logger
